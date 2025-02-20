@@ -1,0 +1,124 @@
+name: EvientsCore
+version: '1.0-SNAPSHOT'
+main: rest.dawn.evientsCore.EvientsCore
+api-version: '1.21'
+prefix: Evients
+depend: [WorldGuard]
+softdepend: [LuckPerms]
+commands:
+  setwarp:
+    description: Sets a new warp
+    usage: /setwarp <name> [x] [y] [z]
+    permission: evients.warps.set
+    aliases: ["addwarp"]
+  warp:
+    description: Teleports you to a warp
+    permission: evients.warps.warp
+    usage: /warp <name>
+  warplist:
+    description: Shows you all the warps
+    permission: evients.warps.list
+    aliases: ["warps"]
+  delwarp:
+    description: Deletes a warp
+    permission: evients.warps.delete
+    aliases: ["deletewarp", "removewarp"]
+
+  timer:
+    description: Starts a timer
+    usage: /timer <30s|5m|cancel>
+    permission: evients.host.timer
+
+  alive:
+    description: Get a list of alive players
+    aliases: ["alivelist"]
+  dead:
+    description: Get a list of dead players
+    aliases: ["deadlist"]
+
+  markdead:
+    description: Mark a user as dead
+    usage: /markdead player
+    aliases: ["setdead"]
+    permission: evients.host.markdead
+
+  hide:
+    description: Hides players from you
+    usage: /hide <staff|all|off>
+
+  mutechat:
+    description: Mutes the chat
+    permission: evients.host.mutechat
+
+  revive:
+    description: Revive a player
+    usage: /revive player
+    aliases: [ "setalive", "markalive" ]
+    permission: evients.host.revive.single
+  reviveall:
+    description: Revives all players
+    permission: evients.host.revive.all
+  reviverandomdead:
+    description: Revives a random dead player
+    permission: evients.host.revive.randomdead
+
+  pvp:
+    description: Toggle pvp within the current region
+    permission: evients.host.region.pvp
+  break:
+    description: Toggle break within the current region
+    permission: evients.host.region.break
+  build:
+    description: Toggle build within the current region
+    permission: evients.host.region.build
+  falldamage:
+    description: Toggle falldamage within the current region
+    permission: evients.host.region.falldamage
+
+  tpall:
+    description: Teleports all players to you
+    permission: evients.host.tp.all
+  tpdead:
+    description: Teleports all dead players to you
+    permission: evients.host.tp.dead
+  tpalive:
+    description: Teleports all alive players to you
+    permission: evients.host.tp.alive
+  tprandom:
+    description: Teleports a random player to you
+    permission: evients.host.tp.random
+  tprandomalive:
+    description: Teleports a random alive player to you
+    permission: evients.host.tp.randomalive
+  tprandomdead:
+    description: Teleports a random dead player to you
+    permission: evients.host.tp.randomdead
+
+  clearall:
+    description: Clears all players' inventories
+    permission: evients.host.clear.all
+  cleardead:
+    description: Clears all dead players' inventories
+    permission: evients.host.clear.dead
+  clearalive:
+    description: CLears all alive players' inventories
+    permission: evients.host.clear.alive
+
+  killall:
+    description: Kills all players
+    permission: evients.host.kill.all
+  killalive:
+    description: Kills alive players
+    permission: evients.host.kill.alive
+  killdead:
+    description: Kills dead players
+    permission: evients.host.kill.dead
+  killrandom:
+    description: Kills a random player
+    permission: evients.host.kill.random
+  killrandomalive:
+    description: Kills a random alive player#
+    permission: evients.host.kill.randomalive
+  killrandomdead:
+    description: Kills a random dead player
+    permission: evients.host.kill.randomdead

@@ -1,0 +1,7 @@
+# Response Options
+announcementEmoji: "⚠"
+
+# Response Colors
+chatColor: GREEN
+accentColor: YELLOW
+errorColor: RED
