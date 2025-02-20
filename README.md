@@ -12,3 +12,4 @@ Commands can have all of these or some of them:
 - `/reviveall` `/reviverandom`
 
 When these types of commands are used, they will say in chat who was selected.
+
