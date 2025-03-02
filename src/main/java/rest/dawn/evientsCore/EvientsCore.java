@@ -49,6 +49,7 @@ public final class EvientsCore extends JavaPlugin implements Listener {
             getCommand("warp").setExecutor(new WarpCommand(this));
             getCommand("warplist").setExecutor(new WarpListCommand(this));
             getCommand("delwarp").setExecutor(new DeleteWarpCommand(this));
+            getCommand("revivepast").setExecutor(new RevivePastCommand(this));
 
             // ----- Multies -----
             Util.loadManyCommandsInto(this, new RegionFlagCommands(this), new String[]

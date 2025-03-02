@@ -7,6 +7,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 import org.jetbrains.annotations.NotNull;
 import rest.dawn.evientsCore.EvientsCore;
+import rest.dawn.evientsCore.Util.Util;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -36,7 +37,7 @@ public class TimerCommand implements CommandExecutor {
             return true;
         }
 
-        int seconds = this.parseTimeInput(strings[0]);
+        int seconds = Util.parseTimeInput(strings[0]);
         if (seconds == -1) {
             commandSender.sendMessage(plugin.chat.error("Invalid time amount!"));
             return true;
@@ -118,20 +119,5 @@ public class TimerCommand implements CommandExecutor {
                     this.plugin.chat.primary("The timer has been cancelled!")
             );
         }
-    }
-
-    // Stolen from ChatGPT
-    private int parseTimeInput(String input) {
-        // Regular expression to match formats like "30s", "1m", "1m30s", etc.
-        Pattern pattern = Pattern.compile("(?:(\\d+)m)?(?:(\\d+)s)?");
-        Matcher matcher = pattern.matcher(input);
-        if (!matcher.matches()) {
-            return -1; // Invalid input
-        }
-
-        int minutes = matcher.group(1) != null ? Integer.parseInt(matcher.group(1)) : 0;
-        int seconds = matcher.group(2) != null ? Integer.parseInt(matcher.group(2)) : 0;
-
-        return minutes * 60 + seconds; // Total seconds
     }
 }

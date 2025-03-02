@@ -1,5 +1,5 @@
 # Response Options
-announcementEmoji: "⚠"
+announcementPrefix: "⚠"
 
 # Response Colors
 chatColor: GREEN

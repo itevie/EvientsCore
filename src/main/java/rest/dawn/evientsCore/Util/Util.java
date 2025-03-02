@@ -11,6 +11,8 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Function;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Util {
     public static <T> T getRandomElement(Set<T> set) {
@@ -53,5 +55,22 @@ public class Util {
         }
 
         return String.join(", ", usernames.toArray(String[]::new));
+    }
+
+
+
+    // Stolen from ChatGPT
+    public static int parseTimeInput(String input) {
+        // Regular expression to match formats like "30s", "1m", "1m30s", etc.
+        Pattern pattern = Pattern.compile("(?:(\\d+)m)?(?:(\\d+)s)?");
+        Matcher matcher = pattern.matcher(input);
+        if (!matcher.matches()) {
+            return -1; // Invalid input
+        }
+
+        int minutes = matcher.group(1) != null ? Integer.parseInt(matcher.group(1)) : 0;
+        int seconds = matcher.group(2) != null ? Integer.parseInt(matcher.group(2)) : 0;
+
+        return minutes * 60 + seconds; // Total seconds
     }
 }

@@ -8,7 +8,7 @@ public class ConfigManager {
     public ChatColor errorColor;
     public ChatColor chatColor;
 
-    public String announcementEmoji;
+    public String announcementPrefix;
 
     public ConfigManager(EvientsCore plugin) {
         var config = plugin.getConfig();
@@ -16,6 +16,6 @@ public class ConfigManager {
         this.errorColor = ChatColor.valueOf(config.getString("errorColor"));
         this.chatColor = ChatColor.valueOf(config.getString("chatColor"));
 
-        this.announcementEmoji = config.getString("announcementEmoji");
+        this.announcementPrefix = config.getString("announcementPrefix");
     }
 }
