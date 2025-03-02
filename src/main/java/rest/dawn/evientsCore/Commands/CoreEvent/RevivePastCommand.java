@@ -37,7 +37,9 @@ public class RevivePastCommand implements CommandExecutor {
 
         long cutoffTime = System.currentTimeMillis() - (seconds * 1000L);
 
-        var players = plugin.listManager.deadTimes.entrySet().stream()
+        var players = plugin.listManager.deadTimes
+                .entrySet()
+                .stream()
                 .filter(entry -> entry.getValue() >= cutoffTime)
                 .map(Map.Entry::getKey)
                 .toList();
@@ -45,6 +47,7 @@ public class RevivePastCommand implements CommandExecutor {
         for (UUID uuid : players) {
             plugin.listManager.setAlive(uuid);
             var player = Bukkit.getPlayer(uuid);
+            assert player != null;
             player.teleport(((Player) commandSender).getLocation());
         }
 
@@ -54,7 +57,7 @@ public class RevivePastCommand implements CommandExecutor {
                                 ChatManager.usernameString(commandSender.getName()),
                                 plugin.chat.accent("" + players.size()),
                                 plugin.chat.accent("" + seconds),
-                                ChatColor.GRAY.toString() +
+                                ChatColor.GRAY +
                                         String.join(", ", Util.uuidsToUsernameString(new HashSet<>(players)))
                         )
                 )

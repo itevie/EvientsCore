@@ -2,9 +2,13 @@
 An extremly simple-to-use plugin for managing Minecraft events without hassle.
 ## Installation
 In the "Releases", download the latest version and simply add it to your plguins folder
+## Suggestions / Issues
+If you ever find any issues with EvientsCore, either open an issue on GitHub, or friend me on Discord: "hypnobella".
+## Customisation
+You can change how EvientsCore looks like in the chat, by editing the colors in the config.yml.
 ## Usage
 You can always check the `/help evientscore` command, but here is a list of basic commands within this plugin.
-
+### Selectors
 In EvientsCore, there are "selectors": `all`, `dead`, `alive`, `random`, `randomalive`, `randomdead`.  
 Commands can have all of these or some of them:
 
@@ -12,8 +16,8 @@ Commands can have all of these or some of them:
 - `/reviveall` `/reviverandom`
 
 When these types of commands are used, they will say in chat who was selected.
-
-Soem commands also accept time periods, for example: `5s`, `5m`, `10m` etc.
+### Time Periods
+Some commands also accept time periods, for example: `5s`, `5m`, `10m` etc.
 ## All Commands
 ### Timers
 Timers aren't annoying! They don't ping you every single second!
@@ -40,9 +44,15 @@ All players can use the `/hide` command, this hides players from the player that
 > `/hide off` Turns off the hide  
 > `/hide staff` Hides everyone except those that have `evients.host` luck perms permission  
 ### Warps
-EvientsCore has it's own warps, so it can manage who can use them. This means that alive players cannot `/warp`, only dead, or staff!
+EvientsCore has its own warps, so it can manage who can use them. This means that alive players cannot `/warp`, only dead, or staff!
 > `/setwarp name` Creates a new warp called "name" at your current position  
 > `/setwarp name 0 0 0` Creates a new warp called "name" at 0, 0, 0  
 > `/deletewarp name` Deletes the warp called "name"  
 > `/warp name` Teleports you to name  
 > `/warplist` Shows you all available warps  
+### Region Flags
+You can toggle different region flag permissions where you are standing.
+> ℹ️ You need to be standing within a region, not a \_\_global\_\_ one!
+
+The following region flag commands exist:
+> `/pvp` `/falldamage` `/break` `/build`
