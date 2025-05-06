@@ -1,7 +1,7 @@
 package rest.dawn.evientsCore.Managers;
 
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Criteria;
 import org.bukkit.scoreboard.DisplaySlot;
@@ -66,6 +66,7 @@ public class ScoreboardManager {
                         + plugin.chat.accent(timer == null ? "None"
                         : timer >= 60 ? (Math.round((float) timer / 60) + "m")
                         : timer + "s"),
+                ChatColor.GRAY + "EvientsCore"
         };
 
         for (int i = 0; i < lines.length; i++) {

@@ -61,6 +61,9 @@ commands:
   reviverandomdead:
     description: Revives a random dead player
     permission: evients.host.revive.randomdead
+  revivepast:
+    description: Revives the past x amount of players
+    permissions: evients.host.revive.revivepast
 
   pvp:
     description: Toggle pvp within the current region

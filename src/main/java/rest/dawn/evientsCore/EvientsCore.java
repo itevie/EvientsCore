@@ -1,6 +1,7 @@
 package rest.dawn.evientsCore;
 
 import org.bukkit.Bukkit;
+import org.bukkit.command.CommandExecutor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
@@ -37,19 +38,29 @@ public final class EvientsCore extends JavaPlugin implements Listener {
         }
 
         try {
-            // ----- Singles -----
-            getCommand("alive").setExecutor(new AliveListCommand(this));
-            getCommand("dead").setExecutor(new DeadListCommand(this));
-            getCommand("revive").setExecutor(new ReviveCommand(this));
-            getCommand("markdead").setExecutor(new MarkDeadCommand(this));
-            getCommand("timer").setExecutor(new TimerCommand(this));
-            getCommand("hide").setExecutor(new HideCommand(this));
-            getCommand("mutechat").setExecutor(new MutechatCommand(this));
-            getCommand("setwarp").setExecutor(new AddWarpCommand(this));
-            getCommand("warp").setExecutor(new WarpCommand(this));
-            getCommand("warplist").setExecutor(new WarpListCommand(this));
-            getCommand("delwarp").setExecutor(new DeleteWarpCommand(this));
-            getCommand("revivepast").setExecutor(new RevivePastCommand(this));
+            Map<String, Class<? extends CommandExecutor>> commandMap = new HashMap<>() {{
+                put("alive", AliveListCommand.class);
+                put("dead", DeadListCommand.class);
+                put("revive", ReviveCommand.class);
+                put("markdead", MarkDeadCommand.class);
+                put("timer", TimerCommand.class);
+                put("hide", HideCommand.class);
+                put("mutechat", MutechatCommand.class);
+                put("setwarp", AddWarpCommand.class);
+                put("warp", WarpCommand.class);
+                put("warplist", WarpListCommand.class);
+                put("delwarp", DeleteWarpCommand.class);
+                put("revivepast", RevivePastCommand.class);
+            }};
+
+            for (var entry : commandMap.entrySet()) {
+                try {
+                    getLogger().info("Loading command " + entry.getKey());
+                    getCommand(entry.getKey()).setExecutor(entry.getValue().getDeclaredConstructor(getClass()).newInstance(this));
+                } catch (Exception e) {
+                    getLogger().warning("Failed to load command " + entry.getKey() + "\n " + e.toString());
+                }
+            }
 
             // ----- Multies -----
             Util.loadManyCommandsInto(this, new RegionFlagCommands(this), new String[]
@@ -69,6 +80,8 @@ public final class EvientsCore extends JavaPlugin implements Listener {
         } catch (NullPointerException e) {
             getLogger().warning(e.toString());
         }
+
+        getLogger().info("Loaded EvientsCore!");
     }
 
     @Override

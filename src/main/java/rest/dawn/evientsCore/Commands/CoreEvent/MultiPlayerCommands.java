@@ -24,6 +24,7 @@ public class MultiPlayerCommands implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
+        System.out.println("hi");
         PlayerType type = PlayerType.getFromString(command.getName());
         Set<UUID> players = plugin.listManager.getPlayersFromPlayerType(type);
         if (players == null) {
