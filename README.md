@@ -1,7 +1,8 @@
 # EvientsCore
 An extremly simple-to-use plugin for managing Minecraft events without hassle.
 ## Installation
-In the "Releases", download the latest version and simply add it to your plguins folder
+In the "Releases", download the latest version and simply add it to your plguins folder.  
+Make sure to have LuckPerms and WorldGuard installed!
 ## Suggestions / Issues
 If you ever find any issues with EvientsCore, either open an issue on GitHub, or friend me on Discord: "hypnobella".
 ## Customisation
