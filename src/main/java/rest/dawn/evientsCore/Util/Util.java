@@ -14,6 +14,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -34,7 +35,7 @@ public class Util {
         }
     }
 
-    public static void uuidToPlayerAndExecute(Set<UUID> uuids, Function<Player, ?> func) {
+    public static void uuidToPlayerAndExecute(Set<UUID> uuids, Consumer<Player> func) {
         for (UUID uuid : uuids) {
             Player player = Bukkit.getPlayer(uuid);
             if (player == null) {
@@ -42,7 +43,7 @@ public class Util {
                 continue;
             }
 
-            func.apply(player);
+            func.accept(player);
         }
     }
 

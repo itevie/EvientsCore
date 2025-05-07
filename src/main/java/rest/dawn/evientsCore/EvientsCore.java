@@ -42,7 +42,6 @@ public final class EvientsCore extends JavaPlugin implements Listener {
             Map<String, Class<? extends CommandExecutor>> commandMap = new HashMap<>() {{
                 put("alive", AliveListCommand.class);
                 put("dead", DeadListCommand.class);
-                put("revive", ReviveCommand.class);
                 put("markdead", MarkDeadCommand.class);
                 put("timer", TimerCommand.class);
                 put("hide", HideCommand.class);
@@ -70,9 +69,11 @@ public final class EvientsCore extends JavaPlugin implements Listener {
                     {
                             "tpall", "tpdead", "tpalive", "tprandom", "tprandomalive", "tprandomdead",
 
-                            "reviveall", "reviverandomdead", "revivedead",
+                            "revive", "reviveall", "reviverandomdead", "revivedead",
 
                             "clearall", "clearalive", "cleardead",
+
+                            "give", "giveall", "givedead", "givealive", "giverandom", "giverandomdead", "giverandomalive",
 
                             "killall", "killdead", "killalive", "killrandom", "killrandomalive", "killrandomdead"
                     }

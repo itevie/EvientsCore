@@ -68,6 +68,21 @@ commands:
     description: Revives the past x amount of players
     permissions: evients.host.revive.revivepast
 
+  give:
+    description: Give a player an item
+  giveall:
+    description: Give everyone an item
+  givealive:
+    description: Give alive players an item
+  givedead:
+    description: Give dead players an item
+  giverandom:
+    description: Give a random player an item
+  giverandomalive:
+    description: Give a random alive player an item
+  giverandomdead:
+    description: Give a random dead player an item
+
   pvp:
     description: Toggle pvp within the current region
     permission: evients.host.region.pvp
