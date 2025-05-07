@@ -32,6 +32,7 @@ public final class EvientsCore extends JavaPlugin implements Listener {
         saveDefaultConfig();
         getServer().getPluginManager().registerEvents(this, this);
         scoreboard.start();
+        listManager.initCacheReloader();
 
         for (var player : Bukkit.getOnlinePlayers()) {
             listManager.setDead(player.getUniqueId());
@@ -50,7 +51,6 @@ public final class EvientsCore extends JavaPlugin implements Listener {
                 put("warp", WarpCommand.class);
                 put("warplist", WarpListCommand.class);
                 put("delwarp", DeleteWarpCommand.class);
-                put("revivepast", RevivePastCommand.class);
             }};
 
             for (var entry : commandMap.entrySet()) {
@@ -70,7 +70,7 @@ public final class EvientsCore extends JavaPlugin implements Listener {
                     {
                             "tpall", "tpdead", "tpalive", "tprandom", "tprandomalive", "tprandomdead",
 
-                            "reviveall", "reviverandomdead",
+                            "reviveall", "reviverandomdead", "revivedead",
 
                             "clearall", "clearalive", "cleardead",
 

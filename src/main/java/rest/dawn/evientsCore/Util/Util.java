@@ -4,6 +4,10 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.entity.Player;
 import rest.dawn.evientsCore.EvientsCore;
+import net.luckperms.api.LuckPerms;
+import net.luckperms.api.LuckPermsProvider;
+import net.luckperms.api.model.user.User;
+import net.luckperms.api.query.QueryOptions;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -13,6 +17,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class Util {
     public static <T> T getRandomElement(Set<T> set) {
@@ -72,5 +77,16 @@ public class Util {
         int seconds = matcher.group(2) != null ? Integer.parseInt(matcher.group(2)) : 0;
 
         return minutes * 60 + seconds; // Total seconds
+    }
+
+    public static boolean userIsHost(UUID player) {
+        LuckPerms luckPerms = LuckPermsProvider.get();
+
+        // Get the LuckPerms user
+        User user = luckPerms.getUserManager().getUser(player);
+
+        boolean has =  user.getCachedData().getPermissionData()
+                    .checkPermission("evients.host").asBoolean();
+        return has;
     }
 }

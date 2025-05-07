@@ -58,6 +58,9 @@ commands:
   reviveall:
     description: Revives all players
     permission: evients.host.revive.all
+  revivedead:
+    description: Revives all dead players
+    permission: evients.host.revive.alldead
   reviverandomdead:
     description: Revives a random dead player
     permission: evients.host.revive.randomdead

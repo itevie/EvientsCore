@@ -11,9 +11,11 @@ import rest.dawn.evientsCore.EvientsCore;
 import rest.dawn.evientsCore.Util.PlayerType;
 import rest.dawn.evientsCore.Util.Util;
 
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class MultiPlayerCommands implements CommandExecutor {
     EvientsCore plugin;
@@ -24,13 +26,15 @@ public class MultiPlayerCommands implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
-        System.out.println("hi");
         PlayerType type = PlayerType.getFromString(command.getName());
         Set<UUID> players = plugin.listManager.getPlayersFromPlayerType(type);
+        List<String> usernames = players.stream().map(x -> Bukkit.getPlayer(x).getName()).toList();
+
         if (players == null) {
             commandSender.sendMessage(plugin.chat.error("Couldn't find any players!"));
             return true;
         }
+
 
         Function<Player, ?> func = null;
         String name = command.getName().replaceAll("(all|alive|dead|random|randomalive|randomdead)$", "");
@@ -68,7 +72,7 @@ public class MultiPlayerCommands implements CommandExecutor {
                         "!",
                         "\n     > ",
                         ChatColor.GRAY.toString() +
-                        String.join(", ", Util.uuidsToUsernameString(players))
+                        String.join(", ", usernames)
                 )
         );
 
