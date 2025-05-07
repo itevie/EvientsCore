@@ -17,12 +17,13 @@ import java.time.Instant;
 import java.util.*;
 
 public final class EvientsCore extends JavaPlugin implements Listener {
-    public ListManager listManager = new ListManager();
+    public ListManager listManager = new ListManager(this);
     public ConfigManager config = new ConfigManager(this);
     public ChatManager chat = new ChatManager(this);
     public StateManager state = new StateManager(this);
     public ScoreboardManager scoreboard = new ScoreboardManager(this);
     public WarpManager warps = new WarpManager(this);
+    public HideManager hides = new HideManager(this);
 
     public Map<UUID, Long> leaveTimes = new HashMap<>();
 
@@ -50,6 +51,7 @@ public final class EvientsCore extends JavaPlugin implements Listener {
                 put("warp", WarpCommand.class);
                 put("warplist", WarpListCommand.class);
                 put("delwarp", DeleteWarpCommand.class);
+                put("forcehide", ForceHideCommand.class);
             }};
 
             for (var entry : commandMap.entrySet()) {
@@ -71,11 +73,11 @@ public final class EvientsCore extends JavaPlugin implements Listener {
 
                             "revive", "reviveall", "reviverandomdead", "revivedead",
 
-                            "clearall", "clearalive", "cleardead",
+                            "clear", "clearall", "clearalive", "cleardead",
 
                             "give", "giveall", "givedead", "givealive", "giverandom", "giverandomdead", "giverandomalive",
 
-                            "killall", "killdead", "killalive", "killrandom", "killrandomalive", "killrandomdead"
+                            "kill", "killall", "killdead", "killalive", "killrandom", "killrandomalive", "killrandomdead"
                     }
             );
         } catch (NullPointerException e) {

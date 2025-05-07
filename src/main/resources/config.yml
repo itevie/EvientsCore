@@ -5,3 +5,6 @@ announcementPrefix: "⚠"
 chatColor: GREEN
 accentColor: YELLOW
 errorColor: RED
+
+# Other Options
+ignoreHostsInCommands: true

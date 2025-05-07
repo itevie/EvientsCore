@@ -8,6 +8,8 @@ public class ConfigManager {
     public ChatColor errorColor;
     public ChatColor chatColor;
 
+    public boolean ignoreHostsInCommands;
+
     public String announcementPrefix;
 
     public ConfigManager(EvientsCore plugin) {
@@ -15,6 +17,8 @@ public class ConfigManager {
         this.accentColor = ChatColor.valueOf(config.getString("accentColor"));
         this.errorColor = ChatColor.valueOf(config.getString("errorColor"));
         this.chatColor = ChatColor.valueOf(config.getString("chatColor"));
+
+        this.ignoreHostsInCommands = config.getBoolean("ignoreHostsInCommands");
 
         this.announcementPrefix = config.getString("announcementPrefix");
     }

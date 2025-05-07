@@ -162,6 +162,7 @@ public class MultiPlayerCommands implements CommandExecutor {
             case "revive" -> "revived";
             case "clear" -> "cleared";
             case "kill" -> "killed";
+            case "give" -> "gave";
             default -> commandName;
         };
     }

@@ -2,6 +2,8 @@ package rest.dawn.evientsCore.Managers;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.scoreboard.Scoreboard;
+import rest.dawn.evientsCore.EvientsCore;
 import rest.dawn.evientsCore.Util.PlayerType;
 import rest.dawn.evientsCore.Util.Util;
 
@@ -10,9 +12,14 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class ListManager {
+    public EvientsCore plugin;
     public Set<UUID> alive = new HashSet<>();
     public Set<UUID> dead = new HashSet<>();
     public Map<UUID, Long> deadTimes = new HashMap<>();
+
+    public ListManager(EvientsCore plugin) {
+        this.plugin = plugin;
+    }
 
     public void reload() {
         Set<UUID> online = Bukkit.getOnlinePlayers().stream()
@@ -21,6 +28,7 @@ public class ListManager {
 
         for (UUID player : online) {
             boolean isHost = Util.userIsHost(player);
+            if (plugin.config.ignoreHostsInCommands) isHost = false;
 
             if (!alive.contains(player) && !dead.contains(player) && !Util.userIsHost(player)) {
                 dead.add(player);
@@ -40,26 +48,18 @@ public class ListManager {
     }
 
     public void initCacheReloader() {
-        Timer timer = new Timer();
-        TimerTask task = new TimerTask() {
-            @Override
-            public void run() {
-                reload();
-            }
-        };
-
-        timer.schedule(task, 0, 10000);
+        Bukkit.getScheduler().runTaskTimer(plugin, this::reload, 20L, 20L);
     }
 
     public void setAlive(UUID player) {
-        if (Util.userIsHost(player)) return;
+        if (Util.userIsHost(player) && !plugin.config.ignoreHostsInCommands) return;
         dead.remove(player);
         deadTimes.remove(player);
         alive.add(player);
     }
 
     public void setDead(UUID player) {
-        if (Util.userIsHost(player)) return;
+        if (Util.userIsHost(player) && !plugin.config.ignoreHostsInCommands) return;
         alive.remove(player);
         dead.add(player);
         deadTimes.put(player, Instant.now().getEpochSecond());

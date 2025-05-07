@@ -44,7 +44,12 @@ commands:
 
   hide:
     description: Hides players from you
-    usage: /hide <staff|all|off>
+    usage: /hide <all|staff|off>
+
+  forcehide:
+    description: Applies the hide mode to everyone that is alive
+    usage: /forcehide <all|staff|off>
+    permission: evients.host.forcehide
 
   mutechat:
     description: Mutes the chat
@@ -70,18 +75,25 @@ commands:
 
   give:
     description: Give a player an item
+    permissions: evients.host.give.single
   giveall:
     description: Give everyone an item
+    permission: evients.host.give.all
   givealive:
     description: Give alive players an item
+    permission: evients.host.give.alive
   givedead:
     description: Give dead players an item
+    permission: evients.host.give.dead
   giverandom:
     description: Give a random player an item
+    permission: evients.host.give.random
   giverandomalive:
     description: Give a random alive player an item
+    permission: evients.host.give.randomalive
   giverandomdead:
     description: Give a random dead player an item
+    permission: evients.host.give.randomdead
 
   pvp:
     description: Toggle pvp within the current region
@@ -115,6 +127,9 @@ commands:
     description: Teleports a random dead player to you
     permission: evients.host.tp.randomdead
 
+  clear:
+    description: Clear a player's inventory
+    permission: evients.host.clear.single
   clearall:
     description: Clears all players' inventories
     permission: evients.host.clear.all
@@ -125,6 +140,9 @@ commands:
     description: CLears all alive players' inventories
     permission: evients.host.clear.alive
 
+  kill:
+    description: Kill a player
+    permission: evients.host.kill.single
   killall:
     description: Kills all players
     permission: evients.host.kill.all
