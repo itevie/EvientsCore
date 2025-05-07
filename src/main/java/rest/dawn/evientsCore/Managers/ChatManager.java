@@ -16,7 +16,7 @@ public class ChatManager {
     }
 
     public void announce(String what) {
-        Bukkit.broadcastMessage("\n " + plugin.config.announcementPrefix + " " + plugin.config.accentColor + what + "\n");
+        Bukkit.broadcastMessage("\n " + plugin.config.announcementPrefix + " " + plugin.config.chatColor + what + "\n");
         playSoundToAll();
     }
 

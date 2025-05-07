@@ -13,8 +13,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class TimerCommand implements CommandExecutor {
-    EvientsCore plugin;
-    BukkitTask current;
+    private final EvientsCore plugin;
+    private BukkitTask current;
 
     public TimerCommand(EvientsCore plugin) {
         this.plugin = plugin;
@@ -27,8 +27,13 @@ public class TimerCommand implements CommandExecutor {
             return true;
         }
 
-        if (strings[0].equalsIgnoreCase("cancel")) {
-            this.stop();
+        String input = strings[0];
+        if (input.equalsIgnoreCase("cancel")) {
+            if (current == null) {
+                commandSender.sendMessage(plugin.chat.error("There is no timer!"));
+            } else {
+                stop();
+            }
             return true;
         }
 
@@ -37,71 +42,35 @@ public class TimerCommand implements CommandExecutor {
             return true;
         }
 
-        int seconds = Util.parseTimeInput(strings[0]);
+        int seconds = Util.parseTimeInput(input);
         if (seconds == -1) {
             commandSender.sendMessage(plugin.chat.error("Invalid time amount!"));
             return true;
         }
 
-        this.start(seconds);
+        start(seconds);
         return true;
     }
 
     private void start(int seconds) {
-        EvientsCore plugin = this.plugin;
+        plugin.chat.announce(plugin.chat.primary("A new timer for ", plugin.chat.accent(getTimeMessage(seconds)), " has just begun!"));
 
-        String amount = seconds > 60
-                ? Math.round((float) seconds / 60) + " minutes"
-                : seconds + " seconds";
-
-        plugin.chat.announce(
-                plugin.chat.primary(
-                        "A new timer for ",
-                        plugin.chat.accent(amount),
-                        " has just begun!"
-                )
-        );
-
-        this.current = new BukkitRunnable() {
+        current = new BukkitRunnable() {
             int secondsLeft = seconds;
 
             @Override
             public void run() {
                 if (secondsLeft <= 0) {
-                    plugin.chat.announce(
-                            plugin.chat.primary("The timer has finished!")
-                    );
+                    plugin.chat.announce("The timer has finished!");
                     cancel();
                     current = null;
                     plugin.scoreboard.timer = null;
                     return;
                 }
 
-                if (secondsLeft >= 60 && secondsLeft % 60 == 0) {
-                    int minutes = Math.round((float) secondsLeft / 60);
-                    plugin.chat.announce(
-                            plugin.chat.primary(
-                                    "There are ",
-                                    plugin.chat.accent(minutes + " minutes"),
-                                    " remaining!"
-                            )
-                    );
-                } else if (secondsLeft < 60 && secondsLeft > 10 && secondsLeft % 10 == 0) {
-                    plugin.chat.announce(
-                            plugin.chat.primary(
-                                    "There are ",
-                                    plugin.chat.accent(secondsLeft + " seconds"),
-                                    " remaining!"
-                            )
-                    );
-                } else if (secondsLeft <= 10) {
-                    plugin.chat.announce(
-                            plugin.chat.primary(
-                                    "There are ",
-                                    plugin.chat.accent(secondsLeft + " seconds"),
-                                    " remaining!"
-                            )
-                    );
+                String timeMessage = getTimeMessage(secondsLeft);
+                if (timeMessage != null) {
+                    plugin.chat.announce(plugin.chat.primary("There are ", plugin.chat.accent(timeMessage), " remaining!"));
                 }
 
                 secondsLeft--;
@@ -110,14 +79,21 @@ public class TimerCommand implements CommandExecutor {
         }.runTaskTimer(plugin, 0L, 20L);
     }
 
+    private String getTimeMessage(int secondsLeft) {
+        if (secondsLeft <= 10 || (secondsLeft < 60 && secondsLeft % 10 == 0)) {
+            return secondsLeft + " seconds";
+        } else if (secondsLeft >= 60 && secondsLeft % 60 == 0) {
+            return Math.round((float) secondsLeft / 60) + " minutes";
+        }
+        return null;
+    }
+
     private void stop() {
-        if (this.current != null) {
+        if (current != null) {
             plugin.scoreboard.timer = null;
-            this.current.cancel();
-            this.current = null;
-            this.plugin.chat.announce(
-                    this.plugin.chat.primary("The timer has been cancelled!")
-            );
+            current.cancel();
+            current = null;
+            plugin.chat.announce(plugin.chat.primary("The timer has been cancelled!"));
         }
     }
 }

@@ -13,7 +13,6 @@ public class Warp {
     public Warp(String name, String world, double x, double y, double z, float yaw, float pitch) {
         this.name = name;
         this.location = new Location(Bukkit.getWorld(world), x, y, z, yaw, pitch);
-
     }
 
     public static Warp fromResultSet(ResultSet rs) throws SQLException {
