@@ -1,4 +1,4 @@
-package rest.dawn.evientsCore.Commands.CoreEvent;
+package rest.dawn.evientsCore.Commands.Warps;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -25,7 +25,7 @@ public class DeleteWarpCommand implements CommandExecutor {
         }
 
         String name = strings[0].toLowerCase();
-        if (!Arrays.asList(plugin.warps.getWarps()).contains(name)) {
+        if (!plugin.warps.getWarps().containsKey(name)) {
             commandSender.sendMessage(plugin.chat.error(
                     "That warp does not exist"
             ));

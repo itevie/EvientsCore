@@ -40,6 +40,8 @@ dependencies {
     implementation("com.google.code.gson:gson:2.10.1") {
         because("Resolve version conflicts with Spigot and WorldGuard")
     }
+
+    implementation 'org.xerial:sqlite-jdbc:3.41.2.2'
 }
 
 

@@ -1,4 +1,4 @@
-package rest.dawn.evientsCore.Commands.CoreEvent;
+package rest.dawn.evientsCore.Commands.Warps;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -18,7 +18,7 @@ public class WarpListCommand implements CommandExecutor {
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
         commandSender.sendMessage(plugin.chat.primary(
                 "Here is the list of warps:\n",
-                ChatColor.WHITE + String.join(", ", plugin.warps.getWarps())
+                ChatColor.WHITE + String.join(", ", plugin.warps.getWarps().keySet())
         ));
         return true;
     }

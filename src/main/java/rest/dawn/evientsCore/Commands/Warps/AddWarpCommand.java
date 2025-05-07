@@ -1,4 +1,4 @@
-package rest.dawn.evientsCore.Commands.CoreEvent;
+package rest.dawn.evientsCore.Commands.Warps;
 
 import org.bukkit.Location;
 import org.bukkit.command.Command;

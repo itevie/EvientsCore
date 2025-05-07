@@ -10,6 +10,10 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import rest.dawn.evientsCore.Commands.CoreEvent.*;
+import rest.dawn.evientsCore.Commands.Warps.AddWarpCommand;
+import rest.dawn.evientsCore.Commands.Warps.DeleteWarpCommand;
+import rest.dawn.evientsCore.Commands.Warps.WarpCommand;
+import rest.dawn.evientsCore.Commands.Warps.WarpListCommand;
 import rest.dawn.evientsCore.Managers.*;
 import rest.dawn.evientsCore.Util.Util;
 
@@ -17,6 +21,7 @@ import java.time.Instant;
 import java.util.*;
 
 public final class EvientsCore extends JavaPlugin implements Listener {
+    public DatabaseManager database = new DatabaseManager(this);
     public ListManager listManager = new ListManager(this);
     public ConfigManager config = new ConfigManager(this);
     public ChatManager chat = new ChatManager(this);

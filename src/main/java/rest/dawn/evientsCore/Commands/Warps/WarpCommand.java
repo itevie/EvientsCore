@@ -1,4 +1,4 @@
-package rest.dawn.evientsCore.Commands.CoreEvent;
+package rest.dawn.evientsCore.Commands.Warps;
 
 import org.bukkit.Location;
 import org.bukkit.command.Command;
@@ -7,8 +7,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import rest.dawn.evientsCore.EvientsCore;
-
-import java.util.Locale;
 
 public class WarpCommand implements CommandExecutor {
     EvientsCore plugin;
