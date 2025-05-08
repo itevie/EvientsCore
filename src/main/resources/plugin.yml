@@ -24,6 +24,10 @@ commands:
     permission: evients.host.warps.delete
     aliases: ["deletewarp", "removewarp"]
 
+  discord:
+    description: Get the Discord invite
+    permission: evients.player.discord
+
   wins:
     description: See how many wins you have
     usage: /wins

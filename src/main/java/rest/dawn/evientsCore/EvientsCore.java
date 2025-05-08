@@ -11,6 +11,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import rest.dawn.evientsCore.Commands.CoreEvent.*;
 import rest.dawn.evientsCore.Commands.CoreEvent.AddWinCommand;
+import rest.dawn.evientsCore.Commands.Help.DiscordCommand;
 import rest.dawn.evientsCore.Commands.Wins.WinsCommand;
 import rest.dawn.evientsCore.Commands.Warps.AddWarpCommand;
 import rest.dawn.evientsCore.Commands.Warps.DeleteWarpCommand;
@@ -34,6 +35,7 @@ public final class EvientsCore extends JavaPlugin implements Listener {
     public WarpManager warps = new WarpManager(this);
     public WinManager wins = new WinManager(this);
     public HideManager hides = new HideManager(this);
+    public RandomAnnouncementManager randomAnnouncements = new RandomAnnouncementManager(this);
 
     public Map<UUID, Long> leaveTimes = new HashMap<>();
 
@@ -44,6 +46,7 @@ public final class EvientsCore extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(this, this);
         scoreboard.start();
         listManager.initCacheReloader();
+        randomAnnouncements.start();
 
         try {
             Map<String, Class<? extends CommandExecutor>> commandMap = new HashMap<>() {{
@@ -62,6 +65,7 @@ public final class EvientsCore extends JavaPlugin implements Listener {
                 put("wins", WinsCommand.class);
                 put("rejoins", RejoinsCommand.class);
                 put("undocommand", UndoCommand.class);
+                put("discord", DiscordCommand.class);
             }};
 
             for (var entry : commandMap.entrySet()) {

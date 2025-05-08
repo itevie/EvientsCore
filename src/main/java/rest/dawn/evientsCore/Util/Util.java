@@ -11,10 +11,7 @@ import net.luckperms.api.model.user.User;
 import net.luckperms.api.query.QueryOptions;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -24,6 +21,14 @@ import java.util.stream.Collectors;
 
 public class Util {
     public static <T> T getRandomElement(Set<T> set) {
+        if (set.isEmpty()) {
+            throw new IllegalArgumentException("Set cannot be empty");
+        }
+        int randomIndex = ThreadLocalRandom.current().nextInt(set.size());
+        return new ArrayList<>(set).get(randomIndex);
+    }
+
+    public static <T> T getRandomElement(List<T> set) {
         if (set.isEmpty()) {
             throw new IllegalArgumentException("Set cannot be empty");
         }

@@ -41,6 +41,8 @@ dependencies {
         because("Resolve version conflicts with Spigot and WorldGuard")
     }
 
+    implementation "net.kyori:adventure-api:4.20.0"
+    implementation "net.kyori:adventure-text-minimessage:4.20.0"
     implementation 'org.xerial:sqlite-jdbc:3.41.2.2'
 }
 

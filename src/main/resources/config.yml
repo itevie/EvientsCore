@@ -1,3 +1,6 @@
+# Information
+discordLink: https://discord.gg/brEcvy7A7y
+
 # Response Options
 announcementPrefix: "⚠"
 
@@ -11,3 +14,12 @@ ignoreHostsInCommands: true
 spawnWarp: spectate # Used for places like rejoins
 
 # Scoreboard
+
+# Random announcements
+randomAnnouncementsEnabled: true
+randomAnnouncementFrequency: 5m
+randomAnnouncements:
+  - Join our Discord in /discord!
+  - This server uses EvientsCore, check it out in /credits!
+  - Hide other players with /hide!
+  - Check how many wins you have with /wins!
