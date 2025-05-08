@@ -45,10 +45,6 @@ public final class EvientsCore extends JavaPlugin implements Listener {
         scoreboard.start();
         listManager.initCacheReloader();
 
-        for (var player : Bukkit.getOnlinePlayers()) {
-            listManager.setDead(player.getUniqueId());
-        }
-
         try {
             Map<String, Class<? extends CommandExecutor>> commandMap = new HashMap<>() {{
                 put("alive", AliveListCommand.class);
