@@ -55,8 +55,6 @@ public class ChatManager {
         ChatColor.GRAY.toString() + string;
     }
 
-
-
     public @Nullable Player requirePlayer(CommandSender sender) {
         if (sender instanceof Player player) {
             return player;

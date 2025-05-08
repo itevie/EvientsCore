@@ -12,6 +12,7 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import rest.dawn.evientsCore.EvientsCore;
 import rest.dawn.evientsCore.Util.PlayerType;
+import rest.dawn.evientsCore.Util.UndoAction;
 import rest.dawn.evientsCore.Util.Util;
 
 import java.util.*;
@@ -28,6 +29,9 @@ public class MultiPlayerCommands implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
+        Player comamndPlayer = plugin.chat.requirePlayer(commandSender);
+        if (comamndPlayer == null) return true;
+
         List<String> args = new ArrayList<>(Arrays.asList(strings));
         Set<UUID> players;
         String typeString = "?";
@@ -45,8 +49,8 @@ public class MultiPlayerCommands implements CommandExecutor {
             }
 
             // Check if it is a player
-            Player player = Bukkit.getPlayer(args.getFirst());
-            if (player == null) {
+            Player playerArg = Bukkit.getPlayer(args.getFirst());
+            if (playerArg == null) {
                 // Check if it is a selector but with a space
                 if (args.getFirst().toLowerCase().matches(MultiPlayerCommands.selectorRegex)) {
                     PlayerType type = PlayerType.getFromString(args.getFirst().toLowerCase());
@@ -59,8 +63,8 @@ public class MultiPlayerCommands implements CommandExecutor {
                 }
             } else {
                 // It is a player
-                players = Set.of(player.getUniqueId());
-                typeString = player.getName();
+                players = Set.of(playerArg.getUniqueId());
+                typeString = playerArg.getName();
             }
 
             // Remove the first argument for future checks
@@ -113,7 +117,7 @@ public class MultiPlayerCommands implements CommandExecutor {
         }
 
         func = switch (name) {
-            case "tp" -> player -> player.teleport(((Player)commandSender).getLocation());
+            case "tp" -> player -> player.teleport(comamndPlayer.getLocation());
             case "kill" -> player -> {
                 player.damage(1000000);
             };
