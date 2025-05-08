@@ -71,6 +71,10 @@ commands:
     description: Mutes the chat
     permission: evients.host.mutechat
 
+  undocommand:
+    description: Undoes the last command
+    permission: evients.host.undo
+
   revive:
     description: Revive a player
     usage: /revive player

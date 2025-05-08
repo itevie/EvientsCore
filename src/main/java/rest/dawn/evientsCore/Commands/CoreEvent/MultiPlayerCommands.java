@@ -116,6 +116,19 @@ public class MultiPlayerCommands implements CommandExecutor {
             specialPart = plugin.chat.accent(amount + "x " + material.name());
         }
 
+        // Apply undoes
+        switch (name)  {
+            case "tp" -> {
+                List<Runnable> funcs = new ArrayList<>();
+                for (UUID uuid : players) {
+                    var _player = Bukkit.getPlayer(uuid);
+                    var location = _player.getLocation().clone();
+                    funcs.add(() -> _player.teleport(location));
+                }
+                plugin.state.undo = new UndoAction(funcs, "tp");
+            }
+        }
+
         func = switch (name) {
             case "tp" -> player -> player.teleport(comamndPlayer.getLocation());
             case "kill" -> player -> {
@@ -125,7 +138,7 @@ public class MultiPlayerCommands implements CommandExecutor {
                 player.getInventory().clear();
             };
             case "revive" -> player -> {
-                player.teleport(((Player)commandSender).getLocation());
+                player.teleport(comamndPlayer.getLocation());
                 plugin.listManager.setAlive(player.getUniqueId());
             };
             case "give" -> player -> {

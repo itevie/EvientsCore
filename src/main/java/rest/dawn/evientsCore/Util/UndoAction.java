@@ -2,21 +2,29 @@ package rest.dawn.evientsCore.Util;
 
 import org.bukkit.entity.Player;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.util.List;
 import java.util.function.Consumer;
 
 public class UndoAction {
-    public Consumer<Player> func;
-    public List<Player> players;
+    public List<Runnable> funcs;
+    public Instant setAt;
+    public String type;
 
-    public UndoAction(Consumer<Player> func, List<Player> players) {
-        this.func = func;
-        this.players = players;
+    public UndoAction(List<Runnable> funcs, String type) {
+        this.funcs = funcs;
+        this.setAt = Instant.now();
+        this.type = type;
+    }
+
+    public boolean expired() {
+        return setAt.isBefore(Instant.now().minus(Duration.ofMinutes(1)));
     }
 
     public void run() {
-        for (Player player : players) {
-            func.accept(player);
+        for (Runnable func : funcs) {
+            func.run();
         }
     }
 }

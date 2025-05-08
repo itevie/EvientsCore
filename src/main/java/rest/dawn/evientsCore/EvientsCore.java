@@ -61,6 +61,7 @@ public final class EvientsCore extends JavaPlugin implements Listener {
                 put("addwin", AddWinCommand.class);
                 put("wins", WinsCommand.class);
                 put("rejoins", RejoinsCommand.class);
+                put("undocommand", UndoCommand.class);
             }};
 
             for (var entry : commandMap.entrySet()) {
