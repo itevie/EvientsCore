@@ -3,9 +3,11 @@ package rest.dawn.evientsCore.Managers;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import rest.dawn.evientsCore.EvientsCore;
 
+import javax.annotation.Nullable;
 import java.util.Arrays;
 
 public class ChatManager {
@@ -49,7 +51,20 @@ public class ChatManager {
     }
 
     public String underString(String string) {
-        return "     > " +
+        return "\n     > " +
         ChatColor.GRAY.toString() + string;
+    }
+
+
+
+    public @Nullable Player requirePlayer(CommandSender sender) {
+        if (sender instanceof Player player) {
+            return player;
+        } else {
+            sender.sendMessage(plugin.chat.error(
+                    "This command can only be sent in-game!"
+            ));
+            return null;
+        }
     }
 }

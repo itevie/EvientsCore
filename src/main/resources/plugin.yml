@@ -27,7 +27,7 @@ commands:
   wins:
     description: See how many wins you have
     usage: /wins
-    permission: evients.players.wins.list
+    permission: evients.player.wins.list
   addwin:
     description: Add a win for a user
     usage: /addwin <user>

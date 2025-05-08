@@ -2,6 +2,7 @@ package rest.dawn.evientsCore.Util;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import rest.dawn.evientsCore.EvientsCore;
 import net.luckperms.api.LuckPerms;
@@ -9,6 +10,7 @@ import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.model.user.User;
 import net.luckperms.api.query.QueryOptions;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;

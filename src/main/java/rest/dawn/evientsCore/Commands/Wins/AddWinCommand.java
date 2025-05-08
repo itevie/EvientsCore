@@ -10,6 +10,9 @@ import rest.dawn.evientsCore.EvientsCore;
 import rest.dawn.evientsCore.Models.Win;
 import rest.dawn.evientsCore.Util.HideMode;
 
+import java.util.List;
+import java.util.UUID;
+
 public class AddWinCommand implements CommandExecutor {
     EvientsCore plugin;
 
@@ -27,13 +30,16 @@ public class AddWinCommand implements CommandExecutor {
         }
 
         Player player = Bukkit.getPlayer(strings[0]);
-        plugin.wins.addWin(new Win(player.getUniqueId()));
+        UUID uuid = player.getUniqueId();
+        plugin.wins.addWin(new Win(uuid));
+        List<Win> wins = plugin.wins.getWinsFor(uuid);
 
         plugin.chat.announce(plugin.chat.primary(
                 plugin.chat.accent(commandSender.getName()),
                 " added a win for ",
                 plugin.chat.accent(player.getName()),
-                "!"
+                "!",
+                plugin.chat.underString("They now have " + wins.size() + " wins")
         ));
 
         return true;

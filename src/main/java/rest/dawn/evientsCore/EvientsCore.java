@@ -11,6 +11,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import rest.dawn.evientsCore.Commands.CoreEvent.*;
 import rest.dawn.evientsCore.Commands.CoreEvent.AddWinCommand;
+import rest.dawn.evientsCore.Commands.Wins.WinsCommand;
 import rest.dawn.evientsCore.Commands.Warps.AddWarpCommand;
 import rest.dawn.evientsCore.Commands.Warps.DeleteWarpCommand;
 import rest.dawn.evientsCore.Commands.Warps.WarpCommand;
@@ -18,6 +19,7 @@ import rest.dawn.evientsCore.Commands.Warps.WarpListCommand;
 import rest.dawn.evientsCore.Managers.*;
 import rest.dawn.evientsCore.Util.Util;
 
+import java.sql.SQLException;
 import java.time.Instant;
 import java.util.*;
 
@@ -60,6 +62,7 @@ public final class EvientsCore extends JavaPlugin implements Listener {
                 put("delwarp", DeleteWarpCommand.class);
                 put("forcehide", ForceHideCommand.class);
                 put("addwin", AddWinCommand.class);
+                put("wins", WinsCommand.class);
             }};
 
             for (var entry : commandMap.entrySet()) {
@@ -97,7 +100,11 @@ public final class EvientsCore extends JavaPlugin implements Listener {
 
     @Override
     public void onDisable() {
-        // Plugin shutdown logic
+        try {
+            database.connection.close();
+        } catch (SQLException e) {
+            getLogger().warning("Failed to close database connection");
+        }
     }
 
     @EventHandler

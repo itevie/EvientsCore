@@ -18,7 +18,7 @@ public class WinManager {
     }
 
     public void addWin(Win win) {
-        String sql = "INSERT INTO wins (uuid, added_at, event_name) VALUES (?, ?, ?";
+        String sql = "INSERT INTO wins (uuid, added_at, event_name) VALUES (?, ?, ?);";
         try (PreparedStatement stmt = plugin.database.connection.prepareStatement(sql)) {
             win.apply(stmt);
             stmt.executeUpdate();
