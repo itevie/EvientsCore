@@ -14,12 +14,12 @@ public class ConfigManager {
 
     public ConfigManager(EvientsCore plugin) {
         var config = plugin.getConfig();
-        this.accentColor = ChatColor.valueOf(config.getString("accentColor"));
-        this.errorColor = ChatColor.valueOf(config.getString("errorColor"));
-        this.chatColor = ChatColor.valueOf(config.getString("chatColor"));
+        this.accentColor = ChatColor.valueOf(config.getString("accentColor", "YELLOW"));
+        this.errorColor = ChatColor.valueOf(config.getString("errorColor", "RED"));
+        this.chatColor = ChatColor.valueOf(config.getString("chatColor", "GREEN"));
 
-        this.ignoreHostsInCommands = config.getBoolean("ignoreHostsInCommands");
+        this.ignoreHostsInCommands = config.getBoolean("ignoreHostsInCommands", true);
 
-        this.announcementPrefix = config.getString("announcementPrefix");
+        this.announcementPrefix = config.getString("announcementPrefix", "⚠");
     }
 }

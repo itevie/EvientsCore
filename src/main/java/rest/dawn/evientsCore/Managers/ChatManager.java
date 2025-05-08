@@ -47,4 +47,9 @@ public class ChatManager {
     public static String usernameString(String playerName) {
         return ChatColor.YELLOW + playerName + ChatColor.WHITE;
     }
+
+    public String underString(String string) {
+        return "     > " +
+        ChatColor.GRAY.toString() + string;
+    }
 }
