@@ -10,6 +10,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import rest.dawn.evientsCore.Commands.CoreEvent.*;
+import rest.dawn.evientsCore.Commands.CoreEvent.AddWinCommand;
 import rest.dawn.evientsCore.Commands.Warps.AddWarpCommand;
 import rest.dawn.evientsCore.Commands.Warps.DeleteWarpCommand;
 import rest.dawn.evientsCore.Commands.Warps.WarpCommand;
@@ -28,6 +29,7 @@ public final class EvientsCore extends JavaPlugin implements Listener {
     public StateManager state = new StateManager(this);
     public ScoreboardManager scoreboard = new ScoreboardManager(this);
     public WarpManager warps = new WarpManager(this);
+    public WinManager wins = new WinManager(this);
     public HideManager hides = new HideManager(this);
 
     public Map<UUID, Long> leaveTimes = new HashMap<>();
@@ -57,6 +59,7 @@ public final class EvientsCore extends JavaPlugin implements Listener {
                 put("warplist", WarpListCommand.class);
                 put("delwarp", DeleteWarpCommand.class);
                 put("forcehide", ForceHideCommand.class);
+                put("addwin", AddWinCommand.class);
             }};
 
             for (var entry : commandMap.entrySet()) {
