@@ -17,6 +17,7 @@ import rest.dawn.evientsCore.Commands.Warps.DeleteWarpCommand;
 import rest.dawn.evientsCore.Commands.Warps.WarpCommand;
 import rest.dawn.evientsCore.Commands.Warps.WarpListCommand;
 import rest.dawn.evientsCore.Managers.*;
+import rest.dawn.evientsCore.Models.Warp;
 import rest.dawn.evientsCore.Util.Util;
 
 import java.sql.SQLException;
@@ -63,6 +64,7 @@ public final class EvientsCore extends JavaPlugin implements Listener {
                 put("forcehide", ForceHideCommand.class);
                 put("addwin", AddWinCommand.class);
                 put("wins", WinsCommand.class);
+                put("rejoins", RejoinsCommand.class);
             }};
 
             for (var entry : commandMap.entrySet()) {
@@ -111,21 +113,41 @@ public final class EvientsCore extends JavaPlugin implements Listener {
     public void onPlayerJoin(PlayerJoinEvent event) {
         UUID uuid = event.getPlayer().getUniqueId();
         this.scoreboard.createScoreboardFor(event.getPlayer());
-
+        System.out.println(String.join(",", leaveTimes.keySet().stream().map(UUID::toString).toArray(String[]::new)));
         if (!leaveTimes.containsKey(uuid)) {
             this.listManager.setDead(event.getPlayer().getUniqueId());
         } else {
-            chat.announce(
-                    chat.primary(
-                            chat.accent(event.getPlayer().getName()),
-                            " has joined back in ",
-                            chat.accent(String.valueOf(Instant.now().getEpochSecond() - leaveTimes.get(uuid))),
-                            " seconds!"
-                    )
-            );
+            if (state.rejoinsDisabled) {
+                listManager.setDead(uuid);
+                if (config.spawnWarp != null) {
+                    Warp warp = warps.getWarp(config.spawnWarp);
+                    if (warp != null) {
+                        warp.teleport(event.getPlayer());
+                        getLogger().info("Teleporting " + uuid + " to spawnWarp as rejoins are disabled");
+                    } else {
+                        event.getPlayer().damage(10000);
+                        getLogger().info("Killing " + uuid + " as there is no spawnWawrp and rejoins are disabled");
+                    }
+                } else {
+                    event.getPlayer().damage(10000);
+                    getLogger().info("Killing " + uuid + " as there is no spawnWawrp and rejoins are disabled");
+                }
+
+                event.getPlayer().sendMessage(chat.primary(
+                        "You have been sent to spawn as rejoins are disabled"
+                ));
+            } else {
+                chat.announce(
+                        chat.primary(
+                                chat.accent(event.getPlayer().getName()),
+                                " has joined back in ",
+                                chat.accent(String.valueOf(Instant.now().getEpochSecond() - leaveTimes.get(uuid))),
+                                " seconds!"
+                        )
+                );
+            }
             leaveTimes.remove(event.getPlayer().getUniqueId());
         }
-
     }
 
     @EventHandler

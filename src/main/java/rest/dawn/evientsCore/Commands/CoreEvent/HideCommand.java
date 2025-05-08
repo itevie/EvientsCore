@@ -11,6 +11,7 @@ import rest.dawn.evientsCore.Util.HideMode;
 
 
 public class HideCommand implements CommandExecutor {
+    private static final String usage = "Usage: /hide <all|staff|off>";
     EvientsCore plugin;
 
     public HideCommand(EvientsCore plugin) {
@@ -20,7 +21,7 @@ public class HideCommand implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
         if (strings.length == 0) {
-            commandSender.sendMessage(plugin.chat.error("Usage: /hide <staff|all|off>"));
+            commandSender.sendMessage(plugin.chat.error(HideCommand.usage));
             return true;
         }
 
@@ -35,7 +36,7 @@ public class HideCommand implements CommandExecutor {
                 plugin.hides.setHideMode((Player)commandSender, HideMode.Off);
                 break;
             default:
-                commandSender.sendMessage(plugin.chat.error("Usage: /hide <staff|all|off>"));
+                commandSender.sendMessage(plugin.chat.error(HideCommand.usage));
                 return true;
         }
 

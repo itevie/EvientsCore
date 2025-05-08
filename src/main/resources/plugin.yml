@@ -63,6 +63,10 @@ commands:
     usage: /forcehide <all|staff|off>
     permission: evients.host.forcehide
 
+  rejoins:
+    description: Toggles rejoins. If disabled, if someone alive leaves then joins, they will be killed.
+    permission: evients.host.rejoins.toggle
+
   mutechat:
     description: Mutes the chat
     permission: evients.host.mutechat

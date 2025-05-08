@@ -57,7 +57,7 @@ public class WarpManager {
         }
     }
 
-    public @Nullable Location getWarp(String name) {
+    public @Nullable Warp getWarp(String name) {
         String sql = "SELECT * FROM warps WHERE name = ?";
 
         try (PreparedStatement stmt = plugin.database.connection.prepareStatement(sql)) {
@@ -65,7 +65,7 @@ public class WarpManager {
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {
-                return Warp.fromResultSet(rs).location;
+                return Warp.fromResultSet(rs);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);

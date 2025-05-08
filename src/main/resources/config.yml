@@ -8,5 +8,6 @@ errorColor: RED
 
 # Other Options
 ignoreHostsInCommands: true
+spawnWarp: spectate # Used for places like rejoins
 
 # Scoreboard

@@ -7,6 +7,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import rest.dawn.evientsCore.EvientsCore;
+import rest.dawn.evientsCore.Models.Warp;
 
 public class WarpCommand implements CommandExecutor {
     EvientsCore plugin;
@@ -17,6 +18,9 @@ public class WarpCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
+        Player player = plugin.chat.requirePlayer(commandSender);
+        if (player == null) return true;
+
         if (strings.length != 1) {
             commandSender.sendMessage(plugin.chat.error(
                     "Please provide a warp name! /warp <name>"
@@ -25,7 +29,7 @@ public class WarpCommand implements CommandExecutor {
         }
 
         String name = strings[0].toLowerCase();
-        Location warp = plugin.warps.getWarp(name);
+        Warp warp = plugin.warps.getWarp(name);
         if (warp == null) {
             commandSender.sendMessage(plugin.chat.error(
                     "A warp with that name does not exist!"
@@ -48,7 +52,7 @@ public class WarpCommand implements CommandExecutor {
             return true;
         }
 
-        ((Player)commandSender).teleport(warp);
+        warp.teleport(player);
         commandSender.sendMessage(plugin.chat.primary(
                 "Whoosh!"
         ));

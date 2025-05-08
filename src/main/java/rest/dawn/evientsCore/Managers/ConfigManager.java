@@ -3,12 +3,15 @@ package rest.dawn.evientsCore.Managers;
 import org.bukkit.ChatColor;
 import rest.dawn.evientsCore.EvientsCore;
 
+import javax.annotation.Nullable;
+
 public class ConfigManager {
     public ChatColor accentColor;
     public ChatColor errorColor;
     public ChatColor chatColor;
 
     public boolean ignoreHostsInCommands;
+    public @Nullable String spawnWarp;
 
     public String announcementPrefix;
 
@@ -18,6 +21,7 @@ public class ConfigManager {
         this.errorColor = ChatColor.valueOf(config.getString("errorColor", "RED"));
         this.chatColor = ChatColor.valueOf(config.getString("chatColor", "GREEN"));
 
+        this.spawnWarp = config.getString("spawnWarp", null);
         this.ignoreHostsInCommands = config.getBoolean("ignoreHostsInCommands", true);
 
         this.announcementPrefix = config.getString("announcementPrefix", "⚠");
