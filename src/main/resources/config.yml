@@ -17,7 +17,7 @@ spawnWarp: spectate # Used for places like rejoins
 
 # Random announcements
 randomAnnouncementsEnabled: true
-randomAnnouncementFrequency: 5m
+randomAnnouncementFrequency: 10m
 randomAnnouncements:
   - Join our Discord in /discord!
   - This server uses EvientsCore, check it out in /credits!

@@ -47,6 +47,11 @@ public class DatabaseManager {
             put("added_at", "TEXT NOT NULL");
             put("event_name", "TEXT DEFAULT NULL");
         }});
+
+        ensureTable("user_data", new HashMap<>(){{
+            put("uuid", "TEXT PRIMARY KEY");
+            put("dms_disabled", "BOOLEAN NOT NULL DEFAULT FALSE");
+        }});
     }
 
     private void ensureTable(String tableName, Map<String, String> definitions) {

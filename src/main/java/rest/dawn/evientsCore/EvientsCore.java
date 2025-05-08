@@ -1,6 +1,5 @@
 package rest.dawn.evientsCore;
 
-import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -11,6 +10,8 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import rest.dawn.evientsCore.Commands.CoreEvent.*;
 import rest.dawn.evientsCore.Commands.CoreEvent.AddWinCommand;
+import rest.dawn.evientsCore.Commands.DirectMessages.MessageCommand;
+import rest.dawn.evientsCore.Commands.DirectMessages.ToggleMessagesCommand;
 import rest.dawn.evientsCore.Commands.Help.DiscordCommand;
 import rest.dawn.evientsCore.Commands.Wins.WinsCommand;
 import rest.dawn.evientsCore.Commands.Warps.AddWarpCommand;
@@ -36,6 +37,8 @@ public final class EvientsCore extends JavaPlugin implements Listener {
     public WinManager wins = new WinManager(this);
     public HideManager hides = new HideManager(this);
     public RandomAnnouncementManager randomAnnouncements = new RandomAnnouncementManager(this);
+    public PrivateMessageManager privateMessages = new PrivateMessageManager(this);
+    public UserDataManager userData = new UserDataManager(this);
 
     public Map<UUID, Long> leaveTimes = new HashMap<>();
 
@@ -66,6 +69,8 @@ public final class EvientsCore extends JavaPlugin implements Listener {
                 put("rejoins", RejoinsCommand.class);
                 put("undocommand", UndoCommand.class);
                 put("discord", DiscordCommand.class);
+                put("message", MessageCommand.class);
+                put("togglemessages", ToggleMessagesCommand.class);
             }};
 
             for (var entry : commandMap.entrySet()) {

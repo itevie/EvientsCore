@@ -28,6 +28,16 @@ commands:
     description: Get the Discord invite
     permission: evients.player.discord
 
+  message:
+    description: Privately DM a user
+    aliases: ["msg", "dm", "pm", "tell"]
+    permission: evients.player.pm.message
+
+  togglemessages:
+    description: Toggle direct messages,
+    aliases: ["togglemsgs", "toggledms", "togglepms"]
+    permission: evients.player.pm.toggle
+
   wins:
     description: See how many wins you have
     usage: /wins
