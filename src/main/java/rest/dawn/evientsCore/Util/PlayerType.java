@@ -18,8 +18,7 @@ public enum PlayerType {
         throw new IllegalArgumentException("No PlayerType matching the provided name");
     }
 
-    @Override
-    public String toString() {
+    public String toHumanString() {
         return switch (this) {
             case PlayerType.ALL -> "all players";
             case PlayerType.DEAD -> "all dead players";

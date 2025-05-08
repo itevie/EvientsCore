@@ -28,7 +28,7 @@ public class ListManager {
 
         for (UUID player : online) {
             boolean isHost = Util.userIsHost(player);
-            if (plugin.config.ignoreHostsInCommands) isHost = false;
+            if (!plugin.config.ignoreHostsInCommands) isHost = false;
 
             if (!alive.contains(player) && !dead.contains(player) && !Util.userIsHost(player)) {
                 dead.add(player);
@@ -52,14 +52,14 @@ public class ListManager {
     }
 
     public void setAlive(UUID player) {
-        if (Util.userIsHost(player) && !plugin.config.ignoreHostsInCommands) return;
+        if (Util.userIsHost(player) && plugin.config.ignoreHostsInCommands) return;
         dead.remove(player);
         deadTimes.remove(player);
         alive.add(player);
     }
 
     public void setDead(UUID player) {
-        if (Util.userIsHost(player) && !plugin.config.ignoreHostsInCommands) return;
+        if (Util.userIsHost(player) && plugin.config.ignoreHostsInCommands) return;
         alive.remove(player);
         dead.add(player);
         deadTimes.put(player, Instant.now().getEpochSecond());

@@ -6,7 +6,6 @@ import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
@@ -17,7 +16,7 @@ import rest.dawn.evientsCore.Util.Util;
 
 import java.util.*;
 import java.util.function.Consumer;
-import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class MultiPlayerCommands implements CommandExecutor {
     EvientsCore plugin;
@@ -35,12 +34,14 @@ public class MultiPlayerCommands implements CommandExecutor {
         List<String> args = new ArrayList<>(Arrays.asList(strings));
         Set<UUID> players;
         String typeString = "?";
+        PlayerType selector = null;
 
         // Check if the command is give<selector>
         if (command.getName().matches(".+" + MultiPlayerCommands.selectorRegex)) {
             PlayerType type = PlayerType.getFromString(command.getName());
             players = plugin.listManager.getPlayersFromPlayerType(type);
-            typeString = type.toString();
+            typeString = type.toHumanString();
+            selector = type;
         } else {
             // Otherwise, if it's empty give an error
             if (args.isEmpty()) {
@@ -55,7 +56,7 @@ public class MultiPlayerCommands implements CommandExecutor {
                 if (args.getFirst().toLowerCase().matches(MultiPlayerCommands.selectorRegex)) {
                     PlayerType type = PlayerType.getFromString(args.getFirst().toLowerCase());
                     players = plugin.listManager.getPlayersFromPlayerType(type);
-                    typeString = type.toString();
+                    typeString = type.toHumanString();
                 } else {
                     // Error
                     commandSender.sendMessage(plugin.chat.error("Invalid user provided!"));
@@ -83,6 +84,10 @@ public class MultiPlayerCommands implements CommandExecutor {
 
         Consumer<Player> func = null;
         String name = command.getName().replaceAll(MultiPlayerCommands.selectorRegex, "");
+
+        if (!plugin.chat.ensurePermission(commandSender, MultiPlayerCommands.getPermissionString(name, selector))) {
+            return true;
+        }
 
         // Check special commands
         String specialPart = "";
@@ -161,7 +166,7 @@ public class MultiPlayerCommands implements CommandExecutor {
             return true;
         }
 
-        Util.uuidToPlayerAndExecute(players, func);
+        players.stream().map(Bukkit::getPlayer).forEach(func);
 
         plugin.chat.announce(
                 plugin.chat.primary(
@@ -177,6 +182,14 @@ public class MultiPlayerCommands implements CommandExecutor {
         );
 
         return true;
+    }
+
+    private static String getPermissionString(String commandName, PlayerType selector) {
+        if (selector != null) {
+            return "evients.host." + commandName + "." + selector.toString().toLowerCase();
+        } else {
+            return "evients.host." + commandName;
+        }
     }
 
     private static String getString(String commandName) {

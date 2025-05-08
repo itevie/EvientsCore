@@ -55,6 +55,16 @@ public class ChatManager {
         ChatColor.GRAY.toString() + string;
     }
 
+    public boolean ensurePermission(CommandSender sender, String permission) {
+        if (!sender.hasPermission(permission)) {
+            sender.sendMessage(plugin.chat.error(
+                    "You do not have permission to do that!"
+            ));
+            return false;
+        }
+        return true;
+    }
+
     public @Nullable Player requirePlayer(CommandSender sender) {
         if (sender instanceof Player player) {
             return player;
