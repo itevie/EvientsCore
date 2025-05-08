@@ -14,7 +14,7 @@ import java.util.Map;
 import java.util.UUID;
 
 public class ScoreboardManager {
-    EvientsCore plugin;
+    private final EvientsCore plugin;
     Map<UUID, Scoreboard> scoreboards = new HashMap<>();
     public Integer timer = null;
 

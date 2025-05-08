@@ -6,7 +6,7 @@ import rest.dawn.evientsCore.EvientsCore;
 import rest.dawn.evientsCore.Util.HideMode;
 
 public class HideManager {
-    public EvientsCore plugin;
+    private final EvientsCore plugin;
 
     public HideManager(EvientsCore plugin) {
         this.plugin = plugin;

@@ -2,11 +2,10 @@ package rest.dawn.evientsCore.Managers;
 
 import rest.dawn.evientsCore.EvientsCore;
 
-public class StateManager {
+public class WinManager {
     private final EvientsCore plugin;
-    public boolean chatMuted = false;
 
-    public StateManager(EvientsCore plugin) {
+    public WinManager(EvientsCore plugin) {
         this.plugin = plugin;
     }
 }

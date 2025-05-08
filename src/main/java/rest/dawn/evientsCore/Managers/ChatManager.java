@@ -9,7 +9,7 @@ import rest.dawn.evientsCore.EvientsCore;
 import java.util.Arrays;
 
 public class ChatManager {
-    public EvientsCore plugin;
+    private final EvientsCore plugin;
 
     public ChatManager(EvientsCore plugin) {
         this.plugin = plugin;

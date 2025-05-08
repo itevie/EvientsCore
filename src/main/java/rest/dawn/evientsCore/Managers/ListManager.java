@@ -12,7 +12,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class ListManager {
-    public EvientsCore plugin;
+    private final EvientsCore plugin;
     public Set<UUID> alive = new HashSet<>();
     public Set<UUID> dead = new HashSet<>();
     public Map<UUID, Long> deadTimes = new HashMap<>();

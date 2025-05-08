@@ -16,7 +16,7 @@ import java.sql.SQLException;
 import java.util.*;
 
 public class WarpManager {
-    final EvientsCore plugin;
+    private final EvientsCore plugin;
     Map<String, Object> warpList;
 
     public WarpManager(EvientsCore plugin) {
