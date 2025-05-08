@@ -3,6 +3,11 @@ An extremly simple-to-use plugin for managing Minecraft events without hassle.
 ## Installation
 In the "Releases", download the latest version and simply add it to your plguins folder.  
 Make sure to have LuckPerms and WorldGuard installed!
+## Permissions
+EvientsCore has two base permissions:
+- `evients.host.*`: All commands that only hosts should run
+- `evients.player.*`: All commands that anyone should have access to
+It's recommended to give your `default` group the "evients.player.*" permission.
 ## Suggestions / Issues
 If you ever find any issues with EvientsCore, either open an issue on GitHub, or friend me on Discord: "hypnobella".
 ## Customisation

@@ -9,20 +9,29 @@ commands:
   setwarp:
     description: Sets a new warp
     usage: /setwarp <name> [x] [y] [z]
-    permission: evients.warps.set
+    permission: evients.host.warps.set
     aliases: ["addwarp"]
   warp:
     description: Teleports you to a warp
-    permission: evients.warps.warp
+    permission: evients.player.warps.warp
     usage: /warp <name>
   warplist:
     description: Shows you all the warps
-    permission: evients.warps.list
+    permission: evients.player.warps.list
     aliases: ["warps"]
   delwarp:
     description: Deletes a warp
-    permission: evients.warps.delete
+    permission: evients.host.warps.delete
     aliases: ["deletewarp", "removewarp"]
+
+  wins:
+    description: See how many wins you have
+    usage: /wins
+    permission: evients.players.wins.list
+  addwin:
+    description: Add a win for a user
+    usage: /addwin <user>
+    permission: evients.host.wins.add
 
   timer:
     description: Starts a timer
@@ -31,9 +40,11 @@ commands:
 
   alive:
     description: Get a list of alive players
+    permission: evients.player.alive.list
     aliases: ["alivelist"]
   dead:
     description: Get a list of dead players
+    permission: evients.player.dead.list
     aliases: ["deadlist"]
 
   markdead:
@@ -45,6 +56,7 @@ commands:
   hide:
     description: Hides players from you
     usage: /hide <all|staff|off>
+    permission: evients.player.hide
 
   forcehide:
     description: Applies the hide mode to everyone that is alive
