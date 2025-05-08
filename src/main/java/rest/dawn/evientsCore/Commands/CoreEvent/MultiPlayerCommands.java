@@ -33,7 +33,7 @@ public class MultiPlayerCommands implements CommandExecutor {
         String typeString = "?";
 
         // Check if the command is give<selector>
-        if (command.getName().matches(MultiPlayerCommands.selectorRegex)) {
+        if (command.getName().matches(".+" + MultiPlayerCommands.selectorRegex)) {
             PlayerType type = PlayerType.getFromString(command.getName());
             players = plugin.listManager.getPlayersFromPlayerType(type);
             typeString = type.toString();
@@ -65,6 +65,13 @@ public class MultiPlayerCommands implements CommandExecutor {
 
             // Remove the first argument for future checks
             args.removeFirst();
+        }
+
+        if (players == null) {
+            commandSender.sendMessage(plugin.chat.error(
+                    "No players to select!"
+            ));
+            return true;
         }
 
 
@@ -146,10 +153,9 @@ public class MultiPlayerCommands implements CommandExecutor {
                         plugin.chat.accent(typeString),
                         !specialPart.isEmpty() ? " " + specialPart : "",
                         "!",
-                        players.size() > 1 ?
                         "\n     > " +
                         ChatColor.GRAY.toString() +
-                        String.join(", ", usernames) : ""
+                        String.join(", ", usernames)
                 )
         );
 
