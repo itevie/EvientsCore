@@ -14,6 +14,7 @@ import rest.dawn.evientsCore.Util.PlayerType;
 import rest.dawn.evientsCore.Util.UndoAction;
 import rest.dawn.evientsCore.Util.Util;
 
+import java.sql.Array;
 import java.util.*;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
@@ -131,6 +132,20 @@ public class MultiPlayerCommands implements CommandExecutor {
                     funcs.add(() -> _player.teleport(location));
                 }
                 plugin.state.undo = new UndoAction(funcs, "tp");
+            }
+            case "revive" -> {
+                List<Runnable> funcs = new ArrayList<>();
+                for (UUID uuid : players) {
+                    var _player = Bukkit.getPlayer(uuid);
+                    var location = _player.getLocation().clone();
+                    var isAlive = plugin.listManager.alive.contains(uuid);
+                    funcs.add(() -> {
+                        _player.teleport(location);
+                        if (isAlive) plugin.listManager.setAlive(uuid);
+                        else plugin.listManager.setDead(uuid);
+                    });
+                }
+                plugin.state.undo = new UndoAction(funcs, "revive");
             }
         }
 
