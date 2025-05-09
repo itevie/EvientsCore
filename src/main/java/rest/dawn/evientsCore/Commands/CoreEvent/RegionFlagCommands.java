@@ -16,6 +16,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import rest.dawn.evientsCore.EvientsCore;
+import rest.dawn.evientsCore.Util.Permissions;
 
 public class RegionFlagCommands implements CommandExecutor {
     public EvientsCore plugin;
@@ -26,7 +27,7 @@ public class RegionFlagCommands implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
-        if (!plugin.permissions.ensurePermission(commandSender, "evients.host.region")) return true;
+        if (!plugin.permissions.ensurePermission(commandSender, Permissions.host("region"))) return true;
 
         RegionContainer container = WorldGuard.getInstance().getPlatform().getRegionContainer();
 

@@ -3,10 +3,9 @@ package rest.dawn.evientsCore.Commands.CoreEvent;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import rest.dawn.evientsCore.EvientsCore;
-import rest.dawn.evientsCore.Util.HideMode;
+import rest.dawn.evientsCore.Util.Permissions;
 
 public class UndoCommand implements CommandExecutor {
     EvientsCore plugin;
@@ -17,7 +16,7 @@ public class UndoCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
-        if (!plugin.permissions.ensurePermission(commandSender, "evients.host.undo")) return true;
+        if (!plugin.permissions.ensurePermission(commandSender, Permissions.host("undo"))) return true;
 
         if (plugin.state.undo == null || plugin.state.undo.expired()) {
             commandSender.sendMessage(plugin.chat.error(

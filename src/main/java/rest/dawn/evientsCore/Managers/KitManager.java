@@ -38,7 +38,7 @@ public class KitManager {
         }
     }
 
-    public List<Kit> getAllKits(String name) {
+    public List<Kit> getAllKits() {
         String sql = "SELECT * FROM kits";
         try (PreparedStatement stmt = plugin.database.connection.prepareStatement(sql)) {
             ResultSet rs = stmt.executeQuery();

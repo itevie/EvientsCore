@@ -13,6 +13,8 @@ import rest.dawn.evientsCore.Commands.CoreEvent.AddWinCommand;
 import rest.dawn.evientsCore.Commands.DirectMessages.MessageCommand;
 import rest.dawn.evientsCore.Commands.DirectMessages.ToggleMessagesCommand;
 import rest.dawn.evientsCore.Commands.Help.DiscordCommand;
+import rest.dawn.evientsCore.Commands.Kits.CreateKitCommand;
+import rest.dawn.evientsCore.Commands.Kits.KitsCommand;
 import rest.dawn.evientsCore.Commands.Wins.WinsCommand;
 import rest.dawn.evientsCore.Commands.Warps.AddWarpCommand;
 import rest.dawn.evientsCore.Commands.Warps.DeleteWarpCommand;
@@ -73,6 +75,8 @@ public final class EvientsCore extends JavaPlugin implements Listener {
                 put("discord", DiscordCommand.class);
                 put("message", MessageCommand.class);
                 put("togglemessages", ToggleMessagesCommand.class);
+                put("createkit", CreateKitCommand.class);
+                put("kits", KitsCommand.class);
             }};
 
             for (var entry : commandMap.entrySet()) {

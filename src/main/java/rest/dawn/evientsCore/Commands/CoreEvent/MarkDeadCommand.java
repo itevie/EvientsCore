@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import rest.dawn.evientsCore.Managers.ChatManager;
 import rest.dawn.evientsCore.EvientsCore;
+import rest.dawn.evientsCore.Util.Permissions;
 
 public class MarkDeadCommand implements CommandExecutor {
     public EvientsCore plugin;
@@ -18,7 +19,7 @@ public class MarkDeadCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
-        if (!plugin.permissions.ensurePermission(commandSender, "evients.host.markdead")) return true;
+        if (!plugin.permissions.ensurePermission(commandSender, Permissions.host("markdead"))) return true;
 
         if (strings.length != 1) {
             commandSender.sendMessage(plugin.chat.error("Please provide a user!"));

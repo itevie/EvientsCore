@@ -7,6 +7,7 @@ import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 import rest.dawn.evientsCore.EvientsCore;
 import rest.dawn.evientsCore.Util.HideMode;
+import rest.dawn.evientsCore.Util.Permissions;
 
 import java.util.UUID;
 
@@ -19,7 +20,7 @@ public class ForceHideCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
-        if (!plugin.permissions.ensurePermission(commandSender, "evients.host.forcehide")) return true;
+        if (!plugin.permissions.ensurePermission(commandSender, Permissions.host("forcehide"))) return true;
 
         if (strings.length == 0) {
             commandSender.sendMessage(

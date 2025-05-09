@@ -7,10 +7,8 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 import org.jetbrains.annotations.NotNull;
 import rest.dawn.evientsCore.EvientsCore;
+import rest.dawn.evientsCore.Util.Permissions;
 import rest.dawn.evientsCore.Util.Util;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class TimerCommand implements CommandExecutor {
     private final EvientsCore plugin;
@@ -22,7 +20,7 @@ public class TimerCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
-        if (!plugin.permissions.ensurePermission(commandSender, "evients.host.timer")) return true;
+        if (!plugin.permissions.ensurePermission(commandSender, Permissions.host("timer"))) return true;
 
         if (strings.length != 1) {
             commandSender.sendMessage(plugin.chat.error("Please provide an amount like: /timer 20s, /timer 5m, /timer cancel"));

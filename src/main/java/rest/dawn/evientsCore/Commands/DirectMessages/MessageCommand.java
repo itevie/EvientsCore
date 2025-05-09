@@ -20,7 +20,7 @@ public class MessageCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
-        Player commandPlayer = plugin.chat.requirePlayer(commandSender);
+        Player commandPlayer = plugin.permissions.requirePlayer(commandSender);
         if (commandPlayer == null) return true;
 
         if (strings.length < 2) {

@@ -5,6 +5,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 import rest.dawn.evientsCore.EvientsCore;
+import rest.dawn.evientsCore.Util.Permissions;
 
 public class RejoinsCommand implements CommandExecutor {
     EvientsCore plugin;
@@ -15,7 +16,7 @@ public class RejoinsCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
-        if (!plugin.permissions.ensurePermission(commandSender, "evients.host.rejoins.toggle")) return true;
+        if (!plugin.permissions.ensurePermission(commandSender, Permissions.host("rejoins.toggle"))) return true;
 
 
 
