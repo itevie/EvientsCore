@@ -17,7 +17,7 @@ public class DeadListCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
-        if (plugin.listManager.alive.isEmpty()) {
+        if (plugin.listManager.dead.isEmpty()) {
             commandSender.sendMessage(plugin.chat.primary("There are no dead players!"));
             return true;
         }
