@@ -23,6 +23,7 @@ public class PermissionManager {
         return true;
     }
 
+    /// Checks if the sender is a player, if not it auto responds and returns null
     public @Nullable Player requirePlayer(CommandSender sender) {
         if (sender instanceof Player player) {
             return player;

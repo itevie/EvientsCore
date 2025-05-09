@@ -9,15 +9,26 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import rest.dawn.evientsCore.EvientsCore;
+import rest.dawn.evientsCore.Models.Kit;
+import rest.dawn.evientsCore.Util.Permissions;
 import rest.dawn.evientsCore.Util.PlayerType;
 import rest.dawn.evientsCore.Util.UndoAction;
-import rest.dawn.evientsCore.Util.Util;
 
-import java.sql.Array;
 import java.util.*;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.stream.Collectors;
+
+// Rules:
+// /x -> Perform on self
+// /x user -> do x on user
+// /xselector -> do x on the selection
+// Exceptions:
+// /give[selector|user] item amount
+
+record CommandAction(@Nullable Function<Player, Runnable> undoFactory, Consumer<Player> action) {}
 
 public class MultiPlayerCommands implements CommandExecutor {
     EvientsCore plugin;
@@ -29,69 +40,70 @@ public class MultiPlayerCommands implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
-        Player comamndPlayer = plugin.permissions.requirePlayer(commandSender);
-        if (comamndPlayer == null) return true;
+        // Only players can run
+        Player commandPlayer = plugin.permissions.requirePlayer(commandSender);
+        if (commandPlayer == null) return true;
 
         List<String> args = new ArrayList<>(Arrays.asList(strings));
-        Set<UUID> players;
-        String typeString = "?";
-        PlayerType selector = null;
+        String name = command.getName().replaceAll(MultiPlayerCommands.selectorRegex, "");
+        String specialPart = "";
 
-        // Check if the command is give<selector>
-        if (command.getName().matches(".+" + MultiPlayerCommands.selectorRegex)) {
-            PlayerType type = PlayerType.getFromString(command.getName());
-            players = plugin.listManager.getPlayersFromPlayerType(type);
-            typeString = type.toHumanString();
-            selector = type;
-        } else {
-            // Otherwise, if it's empty give an error
-            if (args.isEmpty()) {
-                commandSender.sendMessage(plugin.chat.error("Please provide a user or a selector!"));
-                return true;
-            }
+        List<Player> players = new ArrayList<>();
+        PlayerType playerSelectorType =
+                command.getName().matches(".+" + MultiPlayerCommands.selectorRegex)
+                    ? PlayerType.getFromString(command.getName())
+                        : null;
 
-            // Check if it is a player
-            Player playerArg = Bukkit.getPlayer(args.getFirst());
-            if (playerArg == null) {
-                // Check if it is a selector but with a space
-                if (args.getFirst().toLowerCase().matches(MultiPlayerCommands.selectorRegex)) {
-                    PlayerType type = PlayerType.getFromString(args.getFirst().toLowerCase());
-                    players = plugin.listManager.getPlayersFromPlayerType(type);
-                    typeString = type.toHumanString();
-                } else {
-                    // Error
-                    commandSender.sendMessage(plugin.chat.error("Invalid user provided!"));
-                    return true;
-                }
+        // The command has a selector
+        if (playerSelectorType != null) {
+            players = plugin.listManager.getPlayersFromPlayerType(playerSelectorType)
+                    .stream()
+                    .map(Bukkit::getPlayer)
+                    .filter(Objects::nonNull)
+                    .collect(Collectors.toList());
+        } else { // The command does not have a selector
+            Player bukkitPlayer = args.isEmpty() ? null : Bukkit.getPlayer(args.getFirst());
+            // The command has a user as the first parameter
+            if (bukkitPlayer != null) {
+                players = List.of(bukkitPlayer);
+
+                // Remove first arg for commands like /give
+                args.removeFirst();
             } else {
-                // It is a player
-                players = Set.of(playerArg.getUniqueId());
-                typeString = playerArg.getName();
+                // The command does not have selector or user
+                players = List.of(commandPlayer);
             }
-
-            // Remove the first argument for future checks
-            args.removeFirst();
         }
 
-        if (players == null) {
+        // Check for permission
+        String permissionString = Permissions.host(
+                name +
+                        (playerSelectorType != null
+                                ? ("." + playerSelectorType.toString().toLowerCase())
+                                : ""));
+//        plugin.chat.announce(plugin.chat.primary(
+//                "Command Name: ",
+//                plugin.chat.accent(name),
+//                " Selector: ",
+//                plugin.chat.accent(playerSelectorType == null ? "null" : playerSelectorType.toHumanString()),
+//                " Players: ",
+//                plugin.chat.accent(String.join(", ", players.stream().map(Player::getName).toList()),
+//                "Permission String: ",
+//                        plugin.chat.accent(permissionString)
+//                )));
+
+
+        if (!plugin.permissions.ensurePermission(commandSender, permissionString))
+            return true;
+
+        if (players.isEmpty()) {
             commandSender.sendMessage(plugin.chat.error(
-                    "No players to select!"
+                    "No players found!"
             ));
             return true;
         }
 
-
-        List<String> usernames = players.stream().map(x -> Bukkit.getPlayer(x).getName()).toList();
-
-        Consumer<Player> func = null;
-        String name = command.getName().replaceAll(MultiPlayerCommands.selectorRegex, "");
-
-        if (!plugin.permissions.ensurePermission(commandSender, MultiPlayerCommands.getPermissionString(name, selector))) {
-            return true;
-        }
-
-        // Check special commands
-        String specialPart = "";
+        // Check arguments
         if (name.equals("give")) {
             if (args.isEmpty()) {
                 commandSender.sendMessage(plugin.chat.error(
@@ -111,7 +123,7 @@ public class MultiPlayerCommands implements CommandExecutor {
             int amount = 1;
             if (args.size() >= 2) {
                 try {
-                    amount =Integer.parseInt(args.get(1));
+                    amount = Integer.parseInt(args.get(1));
                     if (amount <= 0) throw new NumberFormatException();
                 } catch (NumberFormatException e) {
                     commandSender.sendMessage(plugin.chat.error("Invalid amount: " + args.get(1)));
@@ -121,93 +133,124 @@ public class MultiPlayerCommands implements CommandExecutor {
 
             specialPart = plugin.chat.accent(amount + "x " + material.name());
         }
-
-        // Apply undoes
-        switch (name)  {
-            case "tp" -> {
-                List<Runnable> funcs = new ArrayList<>();
-                for (UUID uuid : players) {
-                    var _player = Bukkit.getPlayer(uuid);
-                    var location = _player.getLocation().clone();
-                    funcs.add(() -> _player.teleport(location));
-                }
-                plugin.state.undo = new UndoAction(funcs, "tp");
+        else if (name.equals("kit")) {
+            if (args.size() != 1) {
+                commandSender.sendMessage(plugin.chat.error(
+                        "Please give a kit name!"
+                ));
+                return true;
             }
-            case "revive" -> {
-                List<Runnable> funcs = new ArrayList<>();
-                for (UUID uuid : players) {
-                    var _player = Bukkit.getPlayer(uuid);
-                    var location = _player.getLocation().clone();
-                    var isAlive = plugin.listManager.alive.contains(uuid);
-                    funcs.add(() -> {
-                        _player.teleport(location);
-                        if (isAlive) plugin.listManager.setAlive(uuid);
-                        else plugin.listManager.setDead(uuid);
-                    });
-                }
-                plugin.state.undo = new UndoAction(funcs, "revive");
+
+            if (!plugin.kits.kitExists(args.getFirst())) {
+                commandSender.sendMessage(plugin.chat.error(
+                        "That kit does not exist!"
+                ));
+                return true;
             }
         }
 
-        func = switch (name) {
-            case "tp" -> player -> player.teleport(comamndPlayer.getLocation());
-            case "kill" -> player -> {
-                player.damage(1000000);
-            };
-            case "clear" -> player -> {
-                player.getInventory().clear();
-            };
-            case "revive" -> player -> {
-                player.teleport(comamndPlayer.getLocation());
-                plugin.listManager.setAlive(player.getUniqueId());
-            };
-            case "give" -> player -> {
-              Material material = Material.matchMaterial(args.getFirst());
-
-              int amount = 1;
-              if (args.size() >= 2) {
-                  amount = Integer.parseInt(args.get(1));
-              }
-
-              ItemStack stack = new ItemStack(Objects.requireNonNull(material), amount);
-              player.getInventory().addItem(stack);
-
-            };
+        CommandAction commandAction = switch (name) {
+            case "tp" -> new CommandAction(
+                    player -> {
+                        var location = player.getLocation().clone();
+                        return () -> player.teleport(location);
+                    },
+                    player -> player.teleport(commandPlayer.getLocation())
+            );
+            case "revive" -> new CommandAction(
+                    player -> {
+                        var location = player.getLocation().clone();
+                        var isAlive = plugin.listManager.alive.contains(player.getUniqueId());
+                        return () -> {
+                            player.teleport(location);
+                            if (isAlive) plugin.listManager.setAlive(player.getUniqueId());
+                            else plugin.listManager.setDead(player.getUniqueId());
+                        };
+                    },
+                    player -> {
+                        player.teleport(commandPlayer.getLocation());
+                        plugin.listManager.setAlive(player.getUniqueId());
+                    }
+            );
+            case "clear" -> new CommandAction(
+                    null,
+                    player -> player.getInventory().clear()
+            );
+            case "kill" -> new CommandAction(
+                    null,
+                    player -> player.damage(1000000)
+            );
+            case "kit" -> new CommandAction(
+                    null,
+                    player -> {
+                        Kit kit = plugin.kits.getKit(args.getFirst());
+                        player.getInventory().setContents(Arrays.copyOfRange(kit.items, 0, 36));
+                        player.getInventory().setHelmet(kit.items.length > 36 ? kit.items[36] : null);
+                        player.getInventory().setChestplate(kit.items.length > 37 ? kit.items[37] : null);
+                        player.getInventory().setLeggings(kit.items.length > 38 ? kit.items[38] : null);
+                        player.getInventory().setBoots(kit.items.length > 39 ? kit.items[39] : null);
+                        player.getInventory().setItemInOffHand(kit.items.length > 40 ? kit.items[40] : null);
+                    }
+            );
+            case "give" -> new CommandAction(
+                    null,
+                    player -> {
+                        Material material = Material.matchMaterial(args.getFirst());
+                        int amount = args.size() >= 2 ? Integer.parseInt(args.get(1)) : 1;
+                        ItemStack stack = new ItemStack(Objects.requireNonNull(material), amount);
+                        player.getInventory().addItem(stack);
+                    }
+            );
             default -> null;
         };
 
-        if (func == null) {
-            commandSender.sendMessage(plugin.chat.error("Invalid command!"));
+        // Check if command existed
+        if (commandAction == null) {
+            commandPlayer.sendMessage(plugin.chat.error(
+                    "Sorry, but an error occurred!"
+            ));
             return true;
         }
 
-        players.stream().map(Bukkit::getPlayer).forEach(func);
+        // Apply undoes
+        if (commandAction.undoFactory() != null) {
+            List<Runnable> undos = players.stream()
+                    .filter(Objects::nonNull)
+                    .map(commandAction.undoFactory())
+                    .toList();
 
-        plugin.chat.announce(
-                plugin.chat.primary(
-                        plugin.chat.accent(commandSender.getName()),
-                        " " + getString(name) + " ",
-                        plugin.chat.accent(typeString),
-                        !specialPart.isEmpty() ? " " + specialPart : "",
-                        "!",
-                        "\n     > " +
-                        ChatColor.GRAY.toString() +
-                        String.join(", ", usernames)
-                )
+            plugin.state.undo = new UndoAction(undos, name);
+        }
+
+        // Run
+        players.stream()
+                .filter(Objects::nonNull)
+                .forEach(commandAction.action());
+
+        String message = plugin.chat.primary(
+                plugin.chat.accent(commandSender.getName()),
+                " " + getPastTenseAction(name) + " ",
+                plugin.chat.accent(
+                        playerSelectorType != null
+                                ? playerSelectorType.toHumanString()
+                                : players.getFirst().getName()
+                ),
+                !specialPart.isEmpty() ? " " + specialPart : "",
+                "!",
+                plugin.chat.underString(String.join(", ", players.stream().map(Player::getName).toList()))
         );
+
+        // Done
+        if (players.size() == 1 && players.getFirst().getUniqueId() == commandPlayer.getUniqueId()) {
+            commandSender.sendMessage(message);
+        } else {
+            plugin.chat.announce(message);
+        }
 
         return true;
     }
 
-    private static String getPermissionString(String commandName, PlayerType selector) {
-        if (selector != null) {
-            return "evients.host." + commandName + "." + selector.toString().toLowerCase();
-        } else {
-            return "evients.host." + commandName;
-        }
-    }
-
-    private static String getString(String commandName) {
+    private static String getPastTenseAction(String commandName) {
         return switch (commandName) {
             case "tp" -> "teleported";
             case "revive" -> "revived";

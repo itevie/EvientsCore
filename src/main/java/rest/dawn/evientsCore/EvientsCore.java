@@ -102,7 +102,9 @@ public final class EvientsCore extends JavaPlugin implements Listener {
 
                             "give", "giveall", "givedead", "givealive", "giverandom", "giverandomdead", "giverandomalive",
 
-                            "kill", "killall", "killdead", "killalive", "killrandom", "killrandomalive", "killrandomdead"
+                            "kill", "killall", "killdead", "killalive", "killrandom", "killrandomalive", "killrandomdead",
+
+                            "kit", "kitall", "kitalive", "kitdead", "kitrandom", "kitrandomalive", "kitrandomdead"
                     }
             );
         } catch (NullPointerException e) {

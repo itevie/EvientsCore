@@ -115,6 +115,28 @@ commands:
     description: Revives the past x amount of players
     permissions: evients.host.revive.revivepast
 
+  kit:
+    description: Give a person a kit
+    permission: evients.host.kit.single
+  kitall:
+    description: Give everyone a kit
+    permission: evients.host.kit.all
+  kitalive:
+    description: Give everyone alive a kit
+    permission: evients.host.kit.alive
+  kitdead:
+    description: Give everyone dead a kit
+    permission: evients.host.kit.dead
+  kitrandom:
+    description: Give a random person a kit
+    permission: evients.host.kit.random
+  kitrandomalive:
+    description: Give a random alive person a kit
+    permission: evients.host.kit.randomalive
+  kitrandomdead:
+    description: Gives a random dead person a kit
+    permission: evients.host.kit.randomdead
+
   give:
     description: Give a player an item
     permissions: evients.host.give.single
