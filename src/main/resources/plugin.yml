@@ -89,6 +89,14 @@ commands:
     description: Undoes the last command
     permission: evients.host.undo
 
+  createkit:
+    description: Create a kit
+    permission: evients.host.kit.create
+  kits:
+    description: Get the list of kits
+    permission: evients.player.kit.list
+    aliases: ["kitlist"]
+
   revive:
     description: Revive a player
     usage: /revive player
