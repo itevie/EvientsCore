@@ -22,6 +22,8 @@ public class TimerCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
+        if (!plugin.permissions.ensurePermission(commandSender, "evients.host.timer")) return true;
+
         if (strings.length != 1) {
             commandSender.sendMessage(plugin.chat.error("Please provide an amount like: /timer 20s, /timer 5m, /timer cancel"));
             return true;

@@ -17,6 +17,8 @@ public class UndoCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
+        if (!plugin.permissions.ensurePermission(commandSender, "evients.host.undo")) return true;
+
         if (plugin.state.undo == null || plugin.state.undo.expired()) {
             commandSender.sendMessage(plugin.chat.error(
                     "Nothing to undo!"

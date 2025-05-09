@@ -18,6 +18,8 @@ public class MarkDeadCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
+        if (!plugin.permissions.ensurePermission(commandSender, "evients.host.markdead")) return true;
+
         if (strings.length != 1) {
             commandSender.sendMessage(plugin.chat.error("Please provide a user!"));
             return true;

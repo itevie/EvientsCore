@@ -17,6 +17,8 @@ public class DeleteWarpCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
+        if (!plugin.permissions.ensurePermission(commandSender, "evients.host.warps.delete")) return true;
+
         if (strings.length != 1) {
             commandSender.sendMessage(plugin.chat.error(
                     "Invalid usage! /delwarp <name>"

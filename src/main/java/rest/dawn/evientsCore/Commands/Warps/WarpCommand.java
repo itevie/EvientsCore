@@ -18,7 +18,7 @@ public class WarpCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
-        Player player = plugin.chat.requirePlayer(commandSender);
+        Player player = plugin.permissions.requirePlayer(commandSender);
         if (player == null) return true;
 
         if (strings.length != 1) {

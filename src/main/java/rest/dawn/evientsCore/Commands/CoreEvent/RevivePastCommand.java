@@ -24,6 +24,8 @@ public class RevivePastCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
+        if (!plugin.permissions.ensurePermission(commandSender, "evients.host.revive.revivepast")) return true;
+
         if (strings.length != 1) {
             commandSender.sendMessage(plugin.chat.error("Please provide a a time frame! Like: /revivepast 5s"));
             return true;

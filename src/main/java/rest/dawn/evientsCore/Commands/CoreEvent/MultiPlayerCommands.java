@@ -29,7 +29,7 @@ public class MultiPlayerCommands implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
-        Player comamndPlayer = plugin.chat.requirePlayer(commandSender);
+        Player comamndPlayer = plugin.permissions.requirePlayer(commandSender);
         if (comamndPlayer == null) return true;
 
         List<String> args = new ArrayList<>(Arrays.asList(strings));
@@ -86,7 +86,7 @@ public class MultiPlayerCommands implements CommandExecutor {
         Consumer<Player> func = null;
         String name = command.getName().replaceAll(MultiPlayerCommands.selectorRegex, "");
 
-        if (!plugin.chat.ensurePermission(commandSender, MultiPlayerCommands.getPermissionString(name, selector))) {
+        if (!plugin.permissions.ensurePermission(commandSender, MultiPlayerCommands.getPermissionString(name, selector))) {
             return true;
         }
 

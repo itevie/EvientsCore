@@ -26,6 +26,8 @@ public class RegionFlagCommands implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
+        if (!plugin.permissions.ensurePermission(commandSender, "evients.host.region")) return true;
+
         RegionContainer container = WorldGuard.getInstance().getPlatform().getRegionContainer();
 
         RegionManager regionManager = container.get(

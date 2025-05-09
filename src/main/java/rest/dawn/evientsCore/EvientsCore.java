@@ -39,6 +39,8 @@ public final class EvientsCore extends JavaPlugin implements Listener {
     public RandomAnnouncementManager randomAnnouncements = new RandomAnnouncementManager(this);
     public PrivateMessageManager privateMessages = new PrivateMessageManager(this);
     public UserDataManager userData = new UserDataManager(this);
+    public PermissionManager permissions = new PermissionManager(this);
+    public KitManager kits = new KitManager(this);
 
     public Map<UUID, Long> leaveTimes = new HashMap<>();
 

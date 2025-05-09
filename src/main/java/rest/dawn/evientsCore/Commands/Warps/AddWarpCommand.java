@@ -17,6 +17,8 @@ public class AddWarpCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
+        if (!plugin.permissions.ensurePermission(commandSender, "evients.host.warps.add")) return true;
+
         if (strings.length != 1 && strings.length != 4) {
             commandSender.sendMessage(
                     plugin.chat.error("Invalid usage! /setwarp <name> [x] [y] [z]")
