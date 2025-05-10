@@ -28,13 +28,13 @@ public class RevivePastCommand implements CommandExecutor {
         if (!plugin.permissions.ensurePermission(commandSender, Permissions.host("revive.revivepast"))) return true;
 
         if (strings.length != 1) {
-            commandSender.sendMessage(plugin.chat.error("Please provide a a time frame! Like: /revivepast 5s"));
+            plugin.chat.replyError(commandSender, "Please provide a a time frame! Like: /revivepast 5s");
             return true;
         }
 
         int seconds = Util.parseTimeInput(strings[0]);
         if (seconds == -1) {
-            commandSender.sendMessage(plugin.chat.error("Invalid time amount!"));
+            plugin.chat.replyError(commandSender, "Invalid time amount!");
             return true;
         }
 
@@ -55,18 +55,14 @@ public class RevivePastCommand implements CommandExecutor {
         }
 
         plugin.chat.announce(
-                plugin.chat.primary(
-                        "%s has revived %s players from the last %s seconds!\n     > %s".formatted(
-                                ChatManager.usernameString(commandSender.getName()),
-                                plugin.chat.accent("" + players.size()),
-                                plugin.chat.accent("" + seconds),
-                                ChatColor.GRAY +
-                                        String.join(", ", Util.uuidsToUsernameString(new HashSet<>(players)))
-                        )
+                "<¬a>%s</¬a> has revived <¬a>%d</¬a> from the last <¬a>%d seconds</¬a>",
+                commandSender.getName(),
+                players.size(),
+                seconds,
+                plugin.chat.underString(
+                        String.join(", ", Util.uuidsToUsernameString(new HashSet<>(players)))
                 )
         );
-
-
         return true;
     }
 }

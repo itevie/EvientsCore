@@ -21,14 +21,11 @@ public class MutechatCommand implements CommandExecutor {
 
         plugin.state.chatMuted = !plugin.state.chatMuted;
         plugin.chat.announce(
-                plugin.chat.primary(
-                        plugin.chat.accent(commandSender.getName()),
-                        " has ",
-                        plugin.state.chatMuted
-                        ? (ChatColor.RED + "muted")
-                                : (ChatColor.GREEN + "unmuted"),
-                        " the chat!"
-                )
+                "<¬a>%s</¬a> has %s the chat!",
+                commandSender.getName(),
+                plugin.state.chatMuted
+                ? "<red>muted</red>"
+                        : "<green>unmuted</green>"
         );
 
         return true;

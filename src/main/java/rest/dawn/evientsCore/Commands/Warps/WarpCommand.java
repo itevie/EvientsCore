@@ -22,18 +22,20 @@ public class WarpCommand implements CommandExecutor {
         if (player == null) return true;
 
         if (strings.length != 1) {
-            commandSender.sendMessage(plugin.chat.error(
-                    "Please provide a warp name! /warp <name>"
-            ));
+            plugin.chat.replyError(
+                    commandSender,
+                    "Please provide a warp anme! /warp \\<name\\>"
+            );
             return true;
         }
 
         String name = strings[0].toLowerCase();
         Warp warp = plugin.warps.getWarp(name);
         if (warp == null) {
-            commandSender.sendMessage(plugin.chat.error(
+            plugin.chat.replyError(
+                    commandSender,
                     "A warp with that name does not exist!"
-            ));
+            );
             return true;
         }
 
@@ -46,16 +48,18 @@ public class WarpCommand implements CommandExecutor {
         }*/
 
         if (!commandSender.hasPermission("evients.host") && plugin.listManager.alive.contains(((Player)commandSender).getUniqueId())) {
-            commandSender.sendMessage(plugin.chat.error(
+            plugin.chat.replyError(
+                    commandSender,
                     "Sorry, but only dead people can warp."
-            ));
+            );
             return true;
         }
 
         warp.teleport(player);
-        commandSender.sendMessage(plugin.chat.primary(
+        plugin.chat.reply(
+                commandSender,
                 "Whoosh!"
-        ));
+        );
         return true;
     }
 }

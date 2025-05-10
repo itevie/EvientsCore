@@ -19,32 +19,31 @@ public class PrivateMessageManager {
         boolean isHost = Util.userIsHost(sender.getUniqueId());
 
         if (senderUserData.dmsDisabled && !isHost) {
-            sender.sendMessage(plugin.chat.error(
-                "You cannot send DMs as you have disabled them!"
-            ));
+            plugin.chat.replyError(
+                    sender,
+                    "You cannot send DMs as you have disabled them!"
+            );
             return;
         }
 
         if (recipientUserData.dmsDisabled && !isHost) {
-            sender.sendMessage(plugin.chat.error(
+            plugin.chat.replyError(
+                    sender,
                     "They have DMs disabled!"
-            ));
+            );
             return;
         }
 
-
-        sender.sendMessage(generateMessage("me", recipient.getName(), message));
-        recipient.sendMessage(generateMessage(sender.getName(), "me", message));
+        plugin.chat.reply(sender, generateMessage("me", recipient.getName(), message));
+        plugin.chat.reply(recipient, generateMessage(sender.getName(), "me", message));
     }
 
     private String generateMessage(String player1, String player2, String message) {
-        return plugin.chat.primary(
-                ChatColor.GRAY + "[",
-                plugin.chat.accent(player1),
-                ChatColor.GRAY + " -> ",
-                plugin.chat.accent(player2),
-                ChatColor.GRAY + "] ",
-                ChatColor.WHITE + message
+        return String.format(
+                "<gray>[<¬a>%s</¬a> -> <¬a>%s</¬a>]</gray> <white>%s</white>",
+                player1,
+                player2,
+                message
         );
     }
 }

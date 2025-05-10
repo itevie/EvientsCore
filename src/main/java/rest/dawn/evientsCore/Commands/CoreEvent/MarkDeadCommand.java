@@ -22,31 +22,27 @@ public class MarkDeadCommand implements CommandExecutor {
         if (!plugin.permissions.ensurePermission(commandSender, Permissions.host("markdead"))) return true;
 
         if (strings.length != 1) {
-            commandSender.sendMessage(plugin.chat.error("Please provide a user!"));
+            plugin.chat.replyError(commandSender, "Please provide a user!");
             return true;
         }
 
         Player player = Bukkit.getPlayer(strings[0]);
         if (player == null) {
-            commandSender.sendMessage(plugin.chat.error("Unknown player!"));
+            plugin.chat.replyError(commandSender, "Unknown player!");
             return true;
         }
 
         if (plugin.listManager.dead.contains(player.getUniqueId())) {
-            commandSender.sendMessage(plugin.chat.error("That player is already dead!"));
+            plugin.chat.replyError(commandSender, "That player is already dead!");
             return true;
         }
 
         plugin.listManager.setDead(player.getUniqueId());
         plugin.chat.announce(
-                plugin.chat.primary(
-                        ChatManager.usernameString(commandSender.getName()),
-                        " has marked ",
-                        ChatManager.usernameString(player.getName()),
-                        " as dead!"
-                )
+                "<¬a>%s</¬a> has marked <¬a>%s</¬a> as dead!",
+                commandSender.getName(),
+                player.getName()
         );
-
         return true;
     }
 }

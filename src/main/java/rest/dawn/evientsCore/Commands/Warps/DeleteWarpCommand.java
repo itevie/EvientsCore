@@ -20,26 +20,28 @@ public class DeleteWarpCommand implements CommandExecutor {
         if (!plugin.permissions.ensurePermission(commandSender, "evients.host.warps.delete")) return true;
 
         if (strings.length != 1) {
-            commandSender.sendMessage(plugin.chat.error(
-                    "Invalid usage! /delwarp <name>"
-            ));
+            plugin.chat.replyError(
+                    commandSender,
+                    "Usage: /delwarp \\<name\\>"
+            );
             return true;
         }
 
         String name = strings[0].toLowerCase();
         if (!plugin.warps.getWarps().containsKey(name)) {
-            commandSender.sendMessage(plugin.chat.error(
-                    "That warp does not exist"
-            ));
+            plugin.chat.replyError(
+                    commandSender,
+                    "That warp does not exist!"
+            );
             return true;
         }
 
         plugin.warps.deleteWarp(name);
-        commandSender.sendMessage(plugin.chat.primary(
-                "Deleted warp ",
-                plugin.chat.accent(name),
-                "!"
-        ));
+        plugin.chat.reply(
+                commandSender,
+                "Deleted warp <¬a>%s</¬a>!",
+                name
+        );
         return true;
     }
 }

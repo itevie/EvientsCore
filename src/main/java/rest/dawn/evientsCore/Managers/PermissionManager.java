@@ -15,9 +15,10 @@ public class PermissionManager {
 
     public boolean ensurePermission(CommandSender sender, String permission) {
         if (!sender.hasPermission(permission)) {
-            sender.sendMessage(plugin.chat.error(
+            plugin.chat.replyError(
+                    sender,
                     "You do not have permission to do that!"
-            ));
+            );
             return false;
         }
         return true;
@@ -28,9 +29,10 @@ public class PermissionManager {
         if (sender instanceof Player player) {
             return player;
         } else {
-            sender.sendMessage(plugin.chat.error(
+            plugin.chat.replyError(
+                    sender,
                     "This command can only be sent in-game!"
-            ));
+            );
             return null;
         }
     }

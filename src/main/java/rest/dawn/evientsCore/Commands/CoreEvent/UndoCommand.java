@@ -19,19 +19,16 @@ public class UndoCommand implements CommandExecutor {
         if (!plugin.permissions.ensurePermission(commandSender, Permissions.host("undo"))) return true;
 
         if (plugin.state.undo == null || plugin.state.undo.expired()) {
-            commandSender.sendMessage(plugin.chat.error(
-                    "Nothing to undo!"
-            ));
+            plugin.chat.replyError(commandSender, "Nothing to undo!");
             return true;
         }
 
         plugin.state.undo.run();
-        plugin.chat.announce(plugin.chat.primary(
-                plugin.chat.accent(commandSender.getName()),
-                " undid the last ",
-                plugin.chat.accent(plugin.state.undo.type),
-                " command!"
-        ));
+        plugin.chat.announce(
+                "<¬a>%s</¬a> undid the last <¬a>%s</¬a> command!",
+                commandSender.getName(),
+                plugin.state.undo.type
+        );
         return true;
     }
 }

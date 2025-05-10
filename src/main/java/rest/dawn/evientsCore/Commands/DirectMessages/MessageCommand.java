@@ -1,7 +1,6 @@
 package rest.dawn.evientsCore.Commands.DirectMessages;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -24,19 +23,20 @@ public class MessageCommand implements CommandExecutor {
         if (commandPlayer == null) return true;
 
         if (strings.length < 2) {
-            commandSender.sendMessage(plugin.chat.error(
-                    "Usage: /msg <user> <message>"
-            ));
-            return true;
+            plugin.chat.replyError(
+                    commandSender,
+                    "Usage: /msg \\<user\\> \\<message\\>"
+            );
         }
 
         Player player = Bukkit.getPlayer(strings[0]);
         String message = String.join(" ", Arrays.copyOfRange(strings, 1, strings.length));
 
         if (player == null) {
-            commandSender.sendMessage(plugin.chat.error(
+            plugin.chat.replyError(
+                    commandSender,
                     "Cannot find that user, are they online?"
-            ));
+            );
             return true;
         }
 

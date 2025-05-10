@@ -23,14 +23,20 @@ public class TimerCommand implements CommandExecutor {
         if (!plugin.permissions.ensurePermission(commandSender, Permissions.host("timer"))) return true;
 
         if (strings.length != 1) {
-            commandSender.sendMessage(plugin.chat.error("Please provide an amount like: /timer 20s, /timer 5m, /timer cancel"));
+            plugin.chat.replyError(
+                    commandSender,
+                    "Please provide an amount like: /timer 20s, /timer 5m, /timer cancel"
+            );
             return true;
         }
 
         String input = strings[0];
         if (input.equalsIgnoreCase("cancel")) {
             if (current == null) {
-                commandSender.sendMessage(plugin.chat.error("There is no timer!"));
+                plugin.chat.replyError(
+                        commandSender,
+                        "There is no timer!"
+                );
             } else {
                 stop();
             }
@@ -38,13 +44,19 @@ public class TimerCommand implements CommandExecutor {
         }
 
         if (current != null) {
-            commandSender.sendMessage(plugin.chat.error("A timer is already ticking!"));
+            plugin.chat.replyError(
+                    commandSender,
+                    "A timer is already ticking!"
+            );
             return true;
         }
 
         int seconds = Util.parseTimeInput(input);
         if (seconds == -1) {
-            commandSender.sendMessage(plugin.chat.error("Invalid time amount!"));
+            plugin.chat.replyError(
+                    commandSender,
+                    "Invalid time amount!"
+            );
             return true;
         }
 
@@ -53,7 +65,10 @@ public class TimerCommand implements CommandExecutor {
     }
 
     private void start(int seconds) {
-        plugin.chat.announce(plugin.chat.primary("A new timer for ", plugin.chat.accent(getTimeMessage(seconds)), " has just begun!"));
+        plugin.chat.announce(
+                "A new timer for <¬a>%s</¬a> has just started!",
+                getTimeMessage(seconds)
+        );
 
         current = new BukkitRunnable() {
             int secondsLeft = seconds;
@@ -61,7 +76,9 @@ public class TimerCommand implements CommandExecutor {
             @Override
             public void run() {
                 if (secondsLeft <= 0) {
-                    plugin.chat.announce("The timer has finished!");
+                    plugin.chat.announce(
+                            "The timer has finished!"
+                    );
                     cancel();
                     current = null;
                     plugin.scoreboard.timer = null;
@@ -70,7 +87,10 @@ public class TimerCommand implements CommandExecutor {
 
                 String timeMessage = getTimeMessage(secondsLeft);
                 if (timeMessage != null) {
-                    plugin.chat.announce(plugin.chat.primary("There are ", plugin.chat.accent(timeMessage), " remaining!"));
+                    plugin.chat.announce(
+                            "There are <¬a>%s</¬a> remaining",
+                            timeMessage
+                    );
                 }
 
                 secondsLeft--;
@@ -93,7 +113,7 @@ public class TimerCommand implements CommandExecutor {
             plugin.scoreboard.timer = null;
             current.cancel();
             current = null;
-            plugin.chat.announce(plugin.chat.primary("The timer has been cancelled!"));
+            plugin.chat.announce("The timer has been cancelled!");
         }
     }
 }

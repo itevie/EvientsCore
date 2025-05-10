@@ -23,8 +23,8 @@ public class ForceHideCommand implements CommandExecutor {
         if (!plugin.permissions.ensurePermission(commandSender, Permissions.host("forcehide"))) return true;
 
         if (strings.length == 0) {
-            commandSender.sendMessage(
-                    plugin.chat.error("Usage: /forcehide <all|staff|off>")
+            plugin.chat.replyError(commandSender,
+                    "Usage: /forcehide \\<all|staff|off\\>"
             );
             return true;
         }
@@ -35,8 +35,8 @@ public class ForceHideCommand implements CommandExecutor {
                 case "staff" -> plugin.hides.setHideMode(Bukkit.getPlayer(uuid), HideMode.Staff);
                 case "off" -> plugin.hides.setHideMode(Bukkit.getPlayer(uuid), HideMode.Off);
                 default -> {
-                    commandSender.sendMessage(
-                            plugin.chat.error("Usage: /forcehide <all|staff|off>")
+                    plugin.chat.replyError(commandSender,
+                            "Usage: /forcehide \\<all|staff|off\\>"
                     );
                     return true;
                 }
@@ -44,12 +44,9 @@ public class ForceHideCommand implements CommandExecutor {
         }
 
         plugin.chat.announce(
-                plugin.chat.primary(
-                        plugin.chat.accent(commandSender.getName()),
-                        " has hidden ",
-                        plugin.chat.accent(HideMode.fromCommandString(strings[0]).toHumanString()),
-                        " for everyone!"
-                )
+                "<¬a>%s</¬a> has hidden <¬a>%s</¬a> for everyone!",
+                commandSender.getName(),
+                HideMode.fromCommandString(strings[0]).toHumanString()
         );
 
         return true;

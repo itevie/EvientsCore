@@ -17,10 +17,10 @@ public class RandomAnnouncementManager {
         if (!plugin.config.randomAnnouncementsEnabled) return;
         Bukkit.getScheduler().runTaskTimer(plugin, () -> {
             String message = Util.getRandomElement(plugin.config.randomAnnouncements);
-            plugin.chat.announce(plugin.chat.primary(
-                    plugin.chat.accent("Random announcement: "),
+            plugin.chat.announce(
+                    "<¬a>Random announcement:</¬a> %s",
                     message
-            ));
+            );
         }, 20L, plugin.config.randomAnnouncementFrequency * 20L);
     }
 }

@@ -40,7 +40,7 @@ public class RegionFlagCommands implements CommandExecutor {
         ApplicableRegionSet regions = regionManager.getApplicableRegions(playerLocation.toVector().toBlockPoint());
 
         if (regions.size() == 0) {
-            commandSender.sendMessage(plugin.chat.error("You are not in a region!"));
+            plugin.chat.replyError(commandSender, "You are not in a region!");
             return true;
         }
 
@@ -50,7 +50,7 @@ public class RegionFlagCommands implements CommandExecutor {
         }
 
         if (last == null) {
-            commandSender.sendMessage(plugin.chat.error("An unknown error occurred."));
+            plugin.chat.replyError(commandSender, "An unknown error occurred.");
             return true;
         }
 
@@ -70,7 +70,7 @@ public class RegionFlagCommands implements CommandExecutor {
                 flag = Flags.FALL_DAMAGE;
                 break;
             default:
-                commandSender.sendMessage(plugin.chat.error("An unknown error occurred."));
+                plugin.chat.replyError(commandSender, "An unknown error occurred.");
                 return true;
         }
 
@@ -78,19 +78,13 @@ public class RegionFlagCommands implements CommandExecutor {
         last.setFlag(flag, old == StateFlag.State.ALLOW ? StateFlag.State.DENY : StateFlag.State.ALLOW);
 
         plugin.chat.announce(
-                plugin.chat.primary(
-                        plugin.chat.accent(commandSender.getName()),
-                        " set ",
-                        plugin.chat.accent(flag.getName()),
-                        " to ",
-                        (old == StateFlag.State.ALLOW
-                                ? (ChatColor.RED + "DENY")
-                                        : (ChatColor.GREEN + "ALLOW")
-                        ),
-                        " in region ",
-                        plugin.chat.accent(last.getId()),
-                        "!"
-                )
+                "<¬a>%s</¬a> set <¬a>%s</¬a> to %s in region <¬a>%s</¬a>!",
+                commandSender.getName(),
+                flag.getName(),
+                old == StateFlag.State.ALLOW
+                ? "<red>DENY</red>"
+                        : "<green>ALLOW</green>",
+                last.getId()
         );
 
         return true;

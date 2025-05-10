@@ -28,11 +28,11 @@ public class WinsCommand implements CommandExecutor {
 
         // TODO: Add wins leaderboard
 
-        commandSender.sendMessage(plugin.chat.primary(
-                "You have ",
-                plugin.chat.accent(String.valueOf(winsForSender)),
-                " wins!"
-        ));
+        plugin.chat.reply(
+                commandSender,
+                "You have <¬a>%d</¬a> wins!",
+                winsForSender
+        );
         return true;
     }
 }

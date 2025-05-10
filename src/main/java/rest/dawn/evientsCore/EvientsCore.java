@@ -147,17 +147,15 @@ public final class EvientsCore extends JavaPlugin implements Listener {
                     getLogger().info("Killing " + uuid + " as there is no spawnWawrp and rejoins are disabled");
                 }
 
-                event.getPlayer().sendMessage(chat.primary(
+                chat.reply(
+                        event.getPlayer(),
                         "You have been sent to spawn as rejoins are disabled"
-                ));
+                );
             } else {
                 chat.announce(
-                        chat.primary(
-                                chat.accent(event.getPlayer().getName()),
-                                " has joined back in ",
-                                chat.accent(String.valueOf(Instant.now().getEpochSecond() - leaveTimes.get(uuid))),
-                                " seconds!"
-                        )
+                        "<¬a>%s</¬a> has joined back in <¬a>%d</¬a> seconds!",
+                        event.getPlayer().getName(),
+                        String.valueOf(Instant.now().getEpochSecond() - leaveTimes.get(uuid))
                 );
             }
             leaveTimes.remove(event.getPlayer().getUniqueId());
@@ -181,7 +179,10 @@ public final class EvientsCore extends JavaPlugin implements Listener {
     @EventHandler
     public void onPlayerChat(AsyncPlayerChatEvent event) {
         if (state.chatMuted && !event.getPlayer().hasPermission("evients.host")) {
-            event.getPlayer().sendMessage(chat.error("Sorry, but chat is muted!"));
+            chat.replyError(
+                    event.getPlayer(),
+                    "Sorry, but chat is muted!"
+            );
             event.setCancelled(true);
         }
     }

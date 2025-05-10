@@ -18,22 +18,21 @@ public class DeadListCommand implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
         if (plugin.listManager.dead.isEmpty()) {
-            commandSender.sendMessage(plugin.chat.primary("There are no dead players!"));
+            plugin.chat.reply(commandSender, "There are no dead players!");
             return true;
         }
 
-        commandSender.sendMessage(
-                plugin.chat.primary(
-                        "List of dead players:\n\n" +
-                                ChatColor.WHITE +
-                                String.join(", ",
-                                        this.plugin.listManager.dead
-                                                .stream()
-                                                .map(uuid -> Bukkit.getOfflinePlayer(uuid).getName())
-                                                .toArray(String[]::new)
-                                )
+        plugin.chat.reply(
+                commandSender,
+                "List of dead players:\n\n<white>%s</white>",
+                String.join(", ",
+                        this.plugin.listManager.dead
+                                .stream()
+                                .map(uuid -> Bukkit.getOfflinePlayer(uuid).getName())
+                                .toArray(String[]::new)
                 )
         );
+
         return true;
     }
 }

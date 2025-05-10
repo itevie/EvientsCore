@@ -20,8 +20,9 @@ public class AddWarpCommand implements CommandExecutor {
         if (!plugin.permissions.ensurePermission(commandSender, "evients.host.warps.add")) return true;
 
         if (strings.length != 1 && strings.length != 4) {
-            commandSender.sendMessage(
-                    plugin.chat.error("Invalid usage! /setwarp <name> [x] [y] [z]")
+            plugin.chat.replyError(
+                    commandSender,
+                    "Usage: /setwarp \\<name\\> [x] [y] [z]"
             );
             return true;
         }
@@ -39,24 +40,22 @@ public class AddWarpCommand implements CommandExecutor {
                 double z = Double.parseDouble(strings[3]);
                 location = new Location(((Player)commandSender).getWorld(), x, y, z, playerLocation.getYaw(), playerLocation.getPitch());
             } catch (NumberFormatException e) {
-                commandSender.sendMessage("Invalid input provided! Please provide a warp name, and 3 positional arguments");
+                plugin.chat.replyError(
+                        commandSender,
+                        "Invalid input provided! Please provide a warp name, and 3 positional arguments"
+                );
                 return true;
             }
         }
 
         plugin.warps.setWarp(name, location);
-        commandSender.sendMessage(
-                plugin.chat.primary(
-                        "Created warp ",
-                        plugin.chat.accent(name),
-                        " which goes to [",
-                        plugin.chat.accent(String.valueOf(location.getX())),
-                        ", ",
-                        plugin.chat.accent(String.valueOf(location.getY())),
-                        ", ",
-                        plugin.chat.accent(String.valueOf(location.getZ())),
-                        "]! "
-                )
+        plugin.chat.reply(
+                commandSender,
+                "Created warp <¬a>%s</¬a> which goes to [<¬a>%d</¬a>, <¬a>%d</¬a>, <¬a>%d</¬a>]!",
+                name,
+                location.getX(),
+                location.getY(),
+                location.getZ()
         );
         return true;
     }

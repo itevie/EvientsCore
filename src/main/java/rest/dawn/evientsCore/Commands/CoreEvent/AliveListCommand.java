@@ -18,22 +18,21 @@ public class AliveListCommand implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
         if (plugin.listManager.alive.isEmpty()) {
-            commandSender.sendMessage(plugin.chat.primary("There are no alive players!"));
+            plugin.chat.reply(commandSender, "There are no alive players!");
             return true;
         }
 
-        commandSender.sendMessage(
-                plugin.chat.primary(
-                        "List of alive players:\n\n" +
-                        ChatColor.WHITE +
-                        String.join(", ",
-                                this.plugin.listManager.alive
-                                        .stream()
-                                        .map(uuid -> Bukkit.getOfflinePlayer(uuid).getName())
-                                        .toArray(String[]::new)
-                        )
+        plugin.chat.reply(
+                commandSender,
+                "List of alive players:\n\n<white>%s</white>",
+                String.join(", ",
+                        this.plugin.listManager.alive
+                                .stream()
+                                .map(uuid -> Bukkit.getOfflinePlayer(uuid).getName())
+                                .toArray(String[]::new)
                 )
         );
+
         return true;
     }
 }

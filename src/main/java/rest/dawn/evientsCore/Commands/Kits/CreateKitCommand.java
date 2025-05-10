@@ -23,16 +23,18 @@ public class CreateKitCommand implements CommandExecutor {
         if (player == null) return true;
 
         if (strings.length != 1) {
-            commandSender.sendMessage(plugin.chat.error(
+            plugin.chat.replyError(
+                    commandSender,
                     "Please provide a name for your kit!"
-            ));
+            );
             return true;
         }
 
         if (plugin.kits.kitExists(strings[0])) {
-            commandSender.sendMessage(plugin.chat.error(
+            plugin.chat.replyError(
+                    commandSender,
                     "A kit with that name already exists!"
-            ));
+            );
             return true;
         }
 
@@ -48,11 +50,11 @@ public class CreateKitCommand implements CommandExecutor {
         kitItems[40] = player.getInventory().getItemInOffHand();
 
         plugin.kits.createKit(strings[0], kitItems);
-        commandSender.sendMessage(plugin.chat.primary(
-                "Kit ",
-                plugin.chat.accent(strings[0]),
-                " has been created!"
-        ));
+        plugin.chat.reply(
+                commandSender,
+                "Kit <¬a>%s</¬a> has been created!",
+                strings[0]
+        );
         return true;
     }
 }

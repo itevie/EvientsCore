@@ -20,11 +20,11 @@ public class KitsCommand implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
         List<Kit> kits = plugin.kits.getAllKits();
-        commandSender.sendMessage(plugin.chat.primary(
-                "Here are the list of kits:\n\n",
-                "" + ChatColor.WHITE,
+        plugin.chat.reply(
+                commandSender,
+                "Here are the last of kits:\n\n<white>%s</white>",
                 String.join(", ", kits.stream().map(x -> x.name).toList())
-        ));
+        );
         return true;
     }
 }

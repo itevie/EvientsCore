@@ -97,26 +97,31 @@ public class MultiPlayerCommands implements CommandExecutor {
             return true;
 
         if (players.isEmpty()) {
-            commandSender.sendMessage(plugin.chat.error(
+            plugin.chat.replyError(
+                    commandSender,
                     "No players found!"
-            ));
+            );
             return true;
         }
 
         // Check arguments
         if (name.equals("give")) {
             if (args.isEmpty()) {
-                commandSender.sendMessage(plugin.chat.error(
-                        "Usage: /give <item> [amount]"
-                ));
+                plugin.chat.replyError(
+                        commandSender,
+                        "Usage: /give \\<item\\> [amount]"
+                );
                 return true;
             }
 
             Material material = Material.matchMaterial(args.getFirst());
             if (material == null) {
-                commandSender.sendMessage(plugin.chat.error(
-                        "Invalid item: " + args.getFirst()
-                ));
+                plugin.chat.announce(args.getFirst());
+                plugin.chat.replyError(
+                        commandSender,
+                        "Invalid item: %s",
+                        args.getFirst()
+                );
                 return true;
             }
 
@@ -126,25 +131,32 @@ public class MultiPlayerCommands implements CommandExecutor {
                     amount = Integer.parseInt(args.get(1));
                     if (amount <= 0) throw new NumberFormatException();
                 } catch (NumberFormatException e) {
-                    commandSender.sendMessage(plugin.chat.error("Invalid amount: " + args.get(1)));
+                    plugin.chat.replyError(
+                            commandSender,
+                            "Invalid amount: %d",
+                            args.get(1)
+                    );
                     return true;
                 }
             }
 
-            specialPart = plugin.chat.accent(amount + "x " + material.name());
+
+            specialPart = String.format("<¬a>%dx %s</¬a>", amount, material.name());
         }
         else if (name.equals("kit")) {
             if (args.size() != 1) {
-                commandSender.sendMessage(plugin.chat.error(
+                plugin.chat.replyError(
+                        commandSender,
                         "Please give a kit name!"
-                ));
+                );
                 return true;
             }
 
             if (!plugin.kits.kitExists(args.getFirst())) {
-                commandSender.sendMessage(plugin.chat.error(
+                plugin.chat.replyError(
+                        commandSender,
                         "That kit does not exist!"
-                ));
+                );
                 return true;
             }
         }
@@ -206,9 +218,10 @@ public class MultiPlayerCommands implements CommandExecutor {
 
         // Check if command existed
         if (commandAction == null) {
-            commandPlayer.sendMessage(plugin.chat.error(
+            plugin.chat.replyError(
+                    commandSender,
                     "Sorry, but an error occurred!"
-            ));
+            );
             return true;
         }
 
@@ -227,22 +240,20 @@ public class MultiPlayerCommands implements CommandExecutor {
                 .filter(Objects::nonNull)
                 .forEach(commandAction.action());
 
-        String message = plugin.chat.primary(
-                plugin.chat.accent(commandSender.getName()),
-                " " + getPastTenseAction(name) + " ",
-                plugin.chat.accent(
-                        playerSelectorType != null
-                                ? playerSelectorType.toHumanString()
-                                : players.getFirst().getName()
-                ),
+        String message = String.format(
+                "<¬a>%s</¬a> %s <¬a>%s</¬a>%s!%s",
+                commandSender.getName(),
+                getPastTenseAction(name),
+                playerSelectorType != null
+                        ? playerSelectorType.toHumanString()
+                        : players.getFirst().getName(),
                 !specialPart.isEmpty() ? " " + specialPart : "",
-                "!",
                 plugin.chat.underString(String.join(", ", players.stream().map(Player::getName).toList()))
         );
 
         // Done
         if (players.size() == 1 && players.getFirst().getUniqueId() == commandPlayer.getUniqueId()) {
-            commandSender.sendMessage(message);
+            plugin.chat.reply(commandSender, message);
         } else {
             plugin.chat.announce(message);
         }

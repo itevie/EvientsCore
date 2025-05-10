@@ -8,9 +8,9 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class ConfigManager {
-    public ChatColor accentColor;
-    public ChatColor errorColor;
-    public ChatColor chatColor;
+    public String accentColor;
+    public String errorColor;
+    public String chatColor;
 
     public boolean ignoreHostsInCommands;
     public @Nullable String spawnWarp;
@@ -23,9 +23,9 @@ public class ConfigManager {
 
     public ConfigManager(EvientsCore plugin) {
         var config = plugin.getConfig();
-        this.accentColor = ChatColor.valueOf(config.getString("accentColor", "YELLOW"));
-        this.errorColor = ChatColor.valueOf(config.getString("errorColor", "RED"));
-        this.chatColor = ChatColor.valueOf(config.getString("chatColor", "GREEN"));
+        this.accentColor = config.getString("accentColor", "yellow");
+        this.errorColor = config.getString("errorColor", "red");
+        this.chatColor = config.getString("chatColor", "green");
 
         this.spawnWarp = config.getString("spawnWarp", null);
         this.ignoreHostsInCommands = config.getBoolean("ignoreHostsInCommands", true);

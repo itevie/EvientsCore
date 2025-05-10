@@ -18,16 +18,14 @@ public class RejoinsCommand implements CommandExecutor {
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
         if (!plugin.permissions.ensurePermission(commandSender, Permissions.host("rejoins.toggle"))) return true;
 
-
-
         plugin.state.rejoinsDisabled = !plugin.state.rejoinsDisabled;
-
-        plugin.chat.announce(plugin.chat.primary(
-                plugin.chat.accent(commandSender.getName()),
-                " has ",
-                plugin.chat.accent(plugin.state.rejoinsDisabled ? "disabled" : "enabled"),
-                " rejoins!"
-        ));
+        plugin.chat.announce(
+                "<¬a>%s</¬a> has <¬a>%s</¬a> rejoins!",
+                commandSender.getName(),
+                plugin.state.rejoinsDisabled
+                ? "<red>disabled</red>"
+                        : "<green>enabled</green>"
+        );
         return true;
     }
 }

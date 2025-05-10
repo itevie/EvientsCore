@@ -25,9 +25,10 @@ public class AddWinCommand implements CommandExecutor {
         if (!plugin.permissions.ensurePermission(commandSender, "evients.host.wins.add")) return true;
 
         if (strings.length != 1) {
-            commandSender.sendMessage(plugin.chat.error(
-                    "Usage: /addwin <user>"
-            ));
+            plugin.chat.replyError(
+                    commandSender,
+                    "Usage: //addwin \\<user\\>"
+            );
             return true;
         }
 
@@ -36,13 +37,12 @@ public class AddWinCommand implements CommandExecutor {
         plugin.wins.addWin(new Win(uuid));
         List<Win> wins = plugin.wins.getWinsFor(uuid);
 
-        plugin.chat.announce(plugin.chat.primary(
-                plugin.chat.accent(commandSender.getName()),
-                " added a win for ",
-                plugin.chat.accent(player.getName()),
-                "!",
+        plugin.chat.announce(
+                "<¬a>%s</¬a> added a win for <¬a>%s</¬a>!%s",
+                commandSender.getName(),
+                player.getName(),
                 plugin.chat.underString("They now have " + wins.size() + " wins")
-        ));
+        );
 
         return true;
     }

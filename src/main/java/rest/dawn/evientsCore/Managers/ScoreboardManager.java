@@ -8,10 +8,13 @@ import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
 import rest.dawn.evientsCore.EvientsCore;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.stream.IntStream;
 
 public class ScoreboardManager {
     private final EvientsCore plugin;
@@ -37,7 +40,11 @@ public class ScoreboardManager {
 
     public void createScoreboardFor(Player player) {
         Scoreboard board = Bukkit.getScoreboardManager().getNewScoreboard();
-        Objective objective = board.registerNewObjective("evients", Criteria.DUMMY, plugin.config.accentColor + "Evients");
+        Objective objective = board.registerNewObjective(
+                "evients",
+                Criteria.DUMMY,
+                plugin.chat.legacy("<¬a>Evients</¬a>")
+        );
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
         updateScoreboardFor(player, board, objective);
         player.setScoreboard(board);
@@ -47,30 +54,32 @@ public class ScoreboardManager {
     private void updateScoreboardFor(Player player, Scoreboard scoreboard, Objective objective) {
         scoreboard.getEntries().forEach(scoreboard::resetScores);
 
-        String[] lines = {
+        List<String> lines = List.of(
                 " ",
-
-                plugin.chat.accent(player.getName()),
-
-                ChatColor.GRAY + "| " + plugin.chat.primary("Status: ")
-                        + plugin.chat.accent(plugin.listManager.alive.contains(player.getUniqueId()) ? "Alive" : "Dead"),
-
+                "<¬a>$player_name</¬a>",
+                "<gray>| </gray> Status: <¬a>$alive_string</¬a>",
                 " ",
-                plugin.chat.accent("Event"),
+                "<¬a>Event</¬a>",
+                "<gray>| </gray> Alive: <¬a>$alive_count</¬a>",
+                "<gray>| </gray> Dead: <¬a>$dead_count</¬a>",
+                "<gray>| </gray> Timer: <¬a>$timer</¬a>",
+                "<gray>EvientsCore</gray>"
+        );
 
-                ChatColor.GRAY + "| " + plugin.chat.primary("Alive: ")
-                        + plugin.chat.accent(String.valueOf(plugin.listManager.alive.size())),
-                ChatColor.GRAY + "| " + plugin.chat.primary("Dead: ")
-                        + plugin.chat.accent(String.valueOf(plugin.listManager.dead.size())),
-                ChatColor.GRAY + "| " + plugin.chat.primary("Timer: ")
-                        + plugin.chat.accent(timer == null ? "None"
+        lines = lines.stream().map(x -> x
+                .replaceAll("\\$player_name", player.getName())
+                .replaceAll("\\$alive_string", plugin.listManager.alive.contains(player.getUniqueId()) ? "Alive" : "Dead")
+                .replaceAll("\\$alive_count", String.valueOf(plugin.listManager.alive.size()))
+                .replaceAll("\\$dead_count", String.valueOf(plugin.listManager.dead.size()))
+                .replaceAll("\\$timer", timer == null ? "None"
                         : timer >= 60 ? (Math.round((float) timer / 60) + "m")
-                        : timer + "s"),
-                ChatColor.GRAY + "EvientsCore"
-        };
+                        : timer + "s")
+        ).toList();
 
-        for (int i = 0; i < lines.length; i++) {
-            objective.getScore(lines[i]).setScore(lines.length - i);
-        }
+        List<String> finalLines = lines;
+        IntStream.range(0, lines.size())
+                .forEach(i -> {
+                    objective.getScore(plugin.chat.legacy(finalLines.get(i))).setScore(finalLines.size() - i);
+                });
     }
 }

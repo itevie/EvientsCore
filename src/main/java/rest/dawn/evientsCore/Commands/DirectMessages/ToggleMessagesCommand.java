@@ -28,11 +28,11 @@ public class ToggleMessagesCommand implements CommandExecutor {
             plugin.userData.setDmsDisabled(player.getUniqueId(), !userData.dmsDisabled);
         }
 
-        commandSender.sendMessage(plugin.chat.primary(
-                "You have ",
-                plugin.chat.accent(userData.dmsDisabled ? "enabled" : "disabled"),
-                " direct messages!"
-        ));
+        plugin.chat.reply(
+                commandSender,
+                "You have %s direct messages!",
+                userData.dmsDisabled ? "enabled" : "disabled"
+        );
         return true;
     }
 }
