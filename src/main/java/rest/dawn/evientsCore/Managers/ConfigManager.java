@@ -8,6 +8,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class ConfigManager {
+    private final EvientsCore plugin;
     public String accentColor;
     public String errorColor;
     public String chatColor;
@@ -23,6 +24,12 @@ public class ConfigManager {
     public String announcementPrefix;
 
     public ConfigManager(EvientsCore plugin) {
+        this.plugin = plugin;
+        load();
+    }
+
+    public void load() {
+        plugin.reloadConfig();
         var config = plugin.getConfig();
         this.accentColor = config.getString("accentColor", "yellow");
         this.errorColor = config.getString("errorColor", "red");
@@ -37,5 +44,6 @@ public class ConfigManager {
         this.randomAnnouncements = config.getStringList("randomAnnouncements");
 
         this.announcementPrefix = config.getString("announcementPrefix", "⚠");
+
     }
 }

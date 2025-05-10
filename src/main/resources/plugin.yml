@@ -33,6 +33,10 @@ commands:
     aliases: ["msg", "dm", "pm", "tell"]
     permission: evients.player.pm.message
 
+  reloadconfig:
+    description: Reloads Evients' config
+    permission: evients.host.reloadconfig
+
   togglemessages:
     description: Toggle direct messages,
     aliases: ["togglemsgs", "toggledms", "togglepms"]
