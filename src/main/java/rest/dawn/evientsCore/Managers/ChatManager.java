@@ -10,6 +10,7 @@ import org.bukkit.Sound;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import rest.dawn.evientsCore.EvientsCore;
+import rest.dawn.evientsCore.Util.HexToMinecraft;
 
 import java.util.Arrays;
 
@@ -38,10 +39,6 @@ public class ChatManager {
         }
     }
 
-    public static String applyColor(ChatColor color, String... parts) {
-        return String.join("", Arrays.stream(parts).map(old -> color + old).toArray(String[]::new));
-    }
-
     public String underString(String string) {
         return "\n     > <gray>" + string + "</gray>";
     }
@@ -52,9 +49,39 @@ public class ChatManager {
     /// ¬e = error
     public String parse(String string) {
         return string
+                .replaceAll("/¬p", getTagName(plugin.config.chatColor))
+                .replaceAll("/¬a", getTagName(plugin.config.accentColor))
+                .replaceAll("/¬e", getTagName(plugin.config.errorColor))
                 .replaceAll("¬p", plugin.config.chatColor)
                 .replaceAll("¬a", plugin.config.accentColor)
                 .replaceAll("¬e", plugin.config.errorColor);
+    }
+
+    private String parseLegacy(String string) {
+        String chat = getLegacyColor(plugin.config.chatColor);
+        String accent = getLegacyColor(plugin.config.accentColor);
+        String error = getLegacyColor(plugin.config.errorColor);
+        return string
+                .replaceAll("¬p", chat)
+                .replaceAll("¬a", accent)
+                .replaceAll("¬e", error);
+    }
+
+    private String getLegacyColor(String string) {
+        if (string.contains(":")) {
+            String[] parts = string.split(":");
+            return HexToMinecraft.convertHexToMiniMessageTag(parts[1]);
+        } else {
+            return string;
+        }
+    }
+
+    private String getTagName(String tag) {
+        int colonIndex = tag.indexOf(':');
+        if (colonIndex != -1) {
+            return "/" + tag.substring(0, colonIndex);
+        }
+        return "/" + tag;
     }
 
     private Component deserializeWrap(String string, String wrap, Object... args) {
@@ -71,7 +98,7 @@ public class ChatManager {
     /// It goes from string -> component -> legacy string
     public String legacy(String format, Object... args) {
         return LegacyComponentSerializer.legacySection().serialize(
-                deserialize(format, args)
+                deserialize(parseLegacy(String.format("<¬p>" + format + "</¬p>", args)))
         );
     }
 

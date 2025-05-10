@@ -4,7 +4,7 @@ discordLink: https://discord.gg/brEcvy7A7y
 # Response Options
 announcementPrefix: "⚠"
 
-# Response Colors
+# Response Colors (using Adventure api)
 chatColor: green
 accentColor: yellow
 errorColor: red

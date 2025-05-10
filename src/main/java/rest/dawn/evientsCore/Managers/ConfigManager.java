@@ -14,6 +14,7 @@ public class ConfigManager {
 
     public boolean ignoreHostsInCommands;
     public @Nullable String spawnWarp;
+//    public int undoTime;
 
     public boolean randomAnnouncementsEnabled;
     public int randomAnnouncementFrequency;
@@ -29,6 +30,7 @@ public class ConfigManager {
 
         this.spawnWarp = config.getString("spawnWarp", null);
         this.ignoreHostsInCommands = config.getBoolean("ignoreHostsInCommands", true);
+        //this.undoTime = config.getInt("undoTime", 10);
 
         this.randomAnnouncementsEnabled = config.getBoolean("randomAnnouncementsEnabled", false);
         this.randomAnnouncementFrequency = Util.parseTimeInput(config.getString("randomAnnouncementFrequency", "5m"));
