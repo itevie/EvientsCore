@@ -1,7 +1,6 @@
 package rest.dawn.evientsCore.Commands.CoreEvent;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -31,8 +30,8 @@ import java.util.stream.Collectors;
 record CommandAction(@Nullable Function<Player, Runnable> undoFactory, Consumer<Player> action) {}
 
 public class MultiPlayerCommands implements CommandExecutor {
-    EvientsCore plugin;
-    public static String selectorRegex = "(all|alive|dead|random|randomalive|randomdead)$";
+    private final EvientsCore plugin;
+    public static final String selectorRegex = "(all|alive|dead|random|randomalive|randomdead)$";
 
     public MultiPlayerCommands(EvientsCore plugin) {
         this.plugin = plugin;
@@ -48,7 +47,7 @@ public class MultiPlayerCommands implements CommandExecutor {
         String name = command.getName().replaceAll(MultiPlayerCommands.selectorRegex, "");
         String specialPart = "";
 
-        List<Player> players = new ArrayList<>();
+        List<Player> players;
         PlayerType playerSelectorType =
                 command.getName().matches(".+" + MultiPlayerCommands.selectorRegex)
                     ? PlayerType.getFromString(command.getName())
@@ -81,19 +80,8 @@ public class MultiPlayerCommands implements CommandExecutor {
                         (playerSelectorType != null
                                 ? ("." + playerSelectorType.toString().toLowerCase())
                                 : ""));
-//        plugin.chat.announce(plugin.chat.primary(
-//                "Command Name: ",
-//                plugin.chat.accent(name),
-//                " Selector: ",
-//                plugin.chat.accent(playerSelectorType == null ? "null" : playerSelectorType.toHumanString()),
-//                " Players: ",
-//                plugin.chat.accent(String.join(", ", players.stream().map(Player::getName).toList()),
-//                "Permission String: ",
-//                        plugin.chat.accent(permissionString)
-//                )));
 
-
-        if (!plugin.permissions.ensurePermission(commandSender, permissionString))
+        if (plugin.permissions.ensurePermission(commandSender, permissionString))
             return true;
 
         if (players.isEmpty()) {
@@ -196,12 +184,12 @@ public class MultiPlayerCommands implements CommandExecutor {
                     null,
                     player -> {
                         Kit kit = plugin.kits.getKit(args.getFirst());
-                        player.getInventory().setContents(Arrays.copyOfRange(kit.items, 0, 36));
-                        player.getInventory().setHelmet(kit.items.length > 36 ? kit.items[36] : null);
-                        player.getInventory().setChestplate(kit.items.length > 37 ? kit.items[37] : null);
-                        player.getInventory().setLeggings(kit.items.length > 38 ? kit.items[38] : null);
-                        player.getInventory().setBoots(kit.items.length > 39 ? kit.items[39] : null);
-                        player.getInventory().setItemInOffHand(kit.items.length > 40 ? kit.items[40] : null);
+                        player.getInventory().setContents(Arrays.copyOfRange(kit.items(), 0, 36));
+                        player.getInventory().setHelmet(kit.items().length > 36 ? kit.items()[36] : null);
+                        player.getInventory().setChestplate(kit.items().length > 37 ? kit.items()[37] : null);
+                        player.getInventory().setLeggings(kit.items().length > 38 ? kit.items()[38] : null);
+                        player.getInventory().setBoots(kit.items().length > 39 ? kit.items()[39] : null);
+                        player.getInventory().setItemInOffHand(kit.items().length > 40 ? kit.items()[40] : null);
                     }
             );
             case "give" -> new CommandAction(

@@ -9,13 +9,13 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import rest.dawn.evientsCore.Commands.CoreEvent.*;
-import rest.dawn.evientsCore.Commands.CoreEvent.AddWinCommand;
 import rest.dawn.evientsCore.Commands.DirectMessages.MessageCommand;
 import rest.dawn.evientsCore.Commands.DirectMessages.ToggleMessagesCommand;
 import rest.dawn.evientsCore.Commands.Help.DiscordCommand;
 import rest.dawn.evientsCore.Commands.Help.ReloadConfigCommand;
 import rest.dawn.evientsCore.Commands.Kits.CreateKitCommand;
 import rest.dawn.evientsCore.Commands.Kits.KitsCommand;
+import rest.dawn.evientsCore.Commands.Wins.AddWinCommand;
 import rest.dawn.evientsCore.Commands.Wins.WinsCommand;
 import rest.dawn.evientsCore.Commands.Warps.AddWarpCommand;
 import rest.dawn.evientsCore.Commands.Warps.DeleteWarpCommand;
@@ -30,22 +30,22 @@ import java.time.Instant;
 import java.util.*;
 
 public final class EvientsCore extends JavaPlugin implements Listener {
-    public DatabaseManager database = new DatabaseManager(this);
-    public ListManager listManager = new ListManager(this);
-    public ConfigManager config = new ConfigManager(this);
-    public ChatManager chat = new ChatManager(this);
-    public StateManager state = new StateManager(this);
-    public ScoreboardManager scoreboard = new ScoreboardManager(this);
-    public WarpManager warps = new WarpManager(this);
-    public WinManager wins = new WinManager(this);
-    public HideManager hides = new HideManager(this);
-    public RandomAnnouncementManager randomAnnouncements = new RandomAnnouncementManager(this);
-    public PrivateMessageManager privateMessages = new PrivateMessageManager(this);
-    public UserDataManager userData = new UserDataManager(this);
-    public PermissionManager permissions = new PermissionManager(this);
-    public KitManager kits = new KitManager(this);
+    public final DatabaseManager database = new DatabaseManager(this);
+    public final ListManager listManager = new ListManager(this);
+    public final ConfigManager config = new ConfigManager(this);
+    public final ChatManager chat = new ChatManager(this);
+    public final StateManager state = new StateManager();
+    public final ScoreboardManager scoreboard = new ScoreboardManager(this);
+    public final WarpManager warps = new WarpManager(this);
+    public final WinManager wins = new WinManager(this);
+    public final HideManager hides = new HideManager(this);
+    public final RandomAnnouncementManager randomAnnouncements = new RandomAnnouncementManager(this);
+    public final PrivateMessageManager privateMessages = new PrivateMessageManager(this);
+    public final UserDataManager userData = new UserDataManager(this);
+    public final PermissionManager permissions = new PermissionManager(this);
+    public final KitManager kits = new KitManager(this);
 
-    public Map<UUID, Long> leaveTimes = new HashMap<>();
+    public final Map<UUID, Long> leaveTimes = new HashMap<>();
 
     @Override
     public void onEnable() {
@@ -86,7 +86,7 @@ public final class EvientsCore extends JavaPlugin implements Listener {
                     getLogger().info("Loading command " + entry.getKey());
                     getCommand(entry.getKey()).setExecutor(entry.getValue().getDeclaredConstructor(getClass()).newInstance(this));
                 } catch (Exception e) {
-                    getLogger().warning("Failed to load command " + entry.getKey() + "\n " + e.toString());
+                    getLogger().warning("Failed to load command " + entry.getKey() + "\n " + e);
                 }
             }
 

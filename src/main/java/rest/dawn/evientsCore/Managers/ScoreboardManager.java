@@ -1,6 +1,5 @@
 package rest.dawn.evientsCore.Managers;
 
-import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Criteria;
@@ -8,7 +7,6 @@ import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
 import rest.dawn.evientsCore.EvientsCore;
-import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 
 import java.util.HashMap;
 import java.util.List;
@@ -18,7 +16,7 @@ import java.util.stream.IntStream;
 
 public class ScoreboardManager {
     private final EvientsCore plugin;
-    Map<UUID, Scoreboard> scoreboards = new HashMap<>();
+    private final Map<UUID, Scoreboard> scoreboards = new HashMap<>();
     public Integer timer = null;
 
     public ScoreboardManager(EvientsCore plugin) {
@@ -78,8 +76,6 @@ public class ScoreboardManager {
 
         List<String> finalLines = lines;
         IntStream.range(0, lines.size())
-                .forEach(i -> {
-                    objective.getScore(plugin.chat.legacy(finalLines.get(i))).setScore(finalLines.size() - i);
-                });
+                .forEach(i -> objective.getScore(plugin.chat.legacy(finalLines.get(i))).setScore(finalLines.size() - i));
     }
 }

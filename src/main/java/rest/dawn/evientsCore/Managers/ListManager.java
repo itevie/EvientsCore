@@ -2,7 +2,6 @@ package rest.dawn.evientsCore.Managers;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.scoreboard.Scoreboard;
 import rest.dawn.evientsCore.EvientsCore;
 import rest.dawn.evientsCore.Util.PlayerType;
 import rest.dawn.evientsCore.Util.Util;
@@ -13,9 +12,9 @@ import java.util.stream.Collectors;
 
 public class ListManager {
     private final EvientsCore plugin;
-    public Set<UUID> alive = new HashSet<>();
-    public Set<UUID> dead = new HashSet<>();
-    public Map<UUID, Long> deadTimes = new HashMap<>();
+    public final Set<UUID> alive = new HashSet<>();
+    public final Set<UUID> dead = new HashSet<>();
+    public final Map<UUID, Long> deadTimes = new HashMap<>();
 
     public ListManager(EvientsCore plugin) {
         this.plugin = plugin;

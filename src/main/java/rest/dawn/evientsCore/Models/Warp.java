@@ -9,7 +9,7 @@ import java.sql.SQLException;
 
 public class Warp {
     public final String name;
-    public Location location;
+    public final Location location;
 
     public Warp(String name, String world, double x, double y, double z, float yaw, float pitch) {
         this.name = name;

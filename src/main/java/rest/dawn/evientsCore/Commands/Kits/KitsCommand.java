@@ -1,6 +1,5 @@
 package rest.dawn.evientsCore.Commands.Kits;
 
-import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -11,7 +10,7 @@ import rest.dawn.evientsCore.Models.Kit;
 import java.util.List;
 
 public class KitsCommand implements CommandExecutor {
-    EvientsCore plugin;
+    private final EvientsCore plugin;
 
     public KitsCommand(EvientsCore plugin) {
         this.plugin = plugin;
@@ -23,7 +22,7 @@ public class KitsCommand implements CommandExecutor {
         plugin.chat.reply(
                 commandSender,
                 "Here are the last of kits:\n\n<white>%s</white>",
-                String.join(", ", kits.stream().map(x -> x.name).toList())
+                String.join(", ", kits.stream().map(Kit::name).toList())
         );
         return true;
     }

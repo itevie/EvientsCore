@@ -1,8 +1,6 @@
 package rest.dawn.evientsCore.Managers;
 
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-import org.bukkit.scoreboard.Scoreboard;
 import rest.dawn.evientsCore.EvientsCore;
 import rest.dawn.evientsCore.Util.Util;
 

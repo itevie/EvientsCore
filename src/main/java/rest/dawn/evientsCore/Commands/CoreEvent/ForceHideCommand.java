@@ -12,7 +12,7 @@ import rest.dawn.evientsCore.Util.Permissions;
 import java.util.UUID;
 
 public class ForceHideCommand implements CommandExecutor {
-    EvientsCore plugin;
+    final EvientsCore plugin;
 
     public ForceHideCommand(EvientsCore plugin) {
         this.plugin = plugin;
@@ -20,7 +20,7 @@ public class ForceHideCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
-        if (!plugin.permissions.ensurePermission(commandSender, Permissions.host("forcehide"))) return true;
+        if (plugin.permissions.ensurePermission(commandSender, Permissions.host("forcehide"))) return true;
 
         if (strings.length == 0) {
             plugin.chat.replyError(commandSender,

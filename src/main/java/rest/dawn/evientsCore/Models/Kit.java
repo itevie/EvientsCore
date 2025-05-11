@@ -7,15 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class Kit {
-    public final String name;
-    public final ItemStack[] items;
-
-    public Kit(String name, ItemStack[] items) {
-        this.name = name;
-        this.items = items;
-    }
-
+public record Kit(String name, ItemStack[] items) {
     public void apply(PreparedStatement stmt) throws SQLException {
         stmt.setString(1, this.name);
         stmt.setString(2, InventoryUtil.serializeInventory(this.items));

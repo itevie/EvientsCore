@@ -1,6 +1,5 @@
 package rest.dawn.evientsCore.Commands.Warps;
 
-import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -10,7 +9,7 @@ import rest.dawn.evientsCore.EvientsCore;
 import rest.dawn.evientsCore.Models.Warp;
 
 public class WarpCommand implements CommandExecutor {
-    EvientsCore plugin;
+    final EvientsCore plugin;
 
     public WarpCommand(EvientsCore plugin) {
         this.plugin = plugin;

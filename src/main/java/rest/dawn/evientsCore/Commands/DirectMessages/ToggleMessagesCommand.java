@@ -7,10 +7,9 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import rest.dawn.evientsCore.EvientsCore;
 import rest.dawn.evientsCore.Models.UserData;
-import rest.dawn.evientsCore.Util.HideMode;
 
 public class ToggleMessagesCommand implements CommandExecutor {
-    EvientsCore plugin;
+    private final EvientsCore plugin;
 
     public ToggleMessagesCommand(EvientsCore plugin) {
         this.plugin = plugin;

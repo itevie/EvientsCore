@@ -8,7 +8,7 @@ import rest.dawn.evientsCore.EvientsCore;
 import rest.dawn.evientsCore.Util.Permissions;
 
 public class RejoinsCommand implements CommandExecutor {
-    EvientsCore plugin;
+    private final EvientsCore plugin;
 
     public RejoinsCommand(EvientsCore plugin) {
         this.plugin = plugin;
@@ -16,7 +16,7 @@ public class RejoinsCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
-        if (!plugin.permissions.ensurePermission(commandSender, Permissions.host("rejoins.toggle"))) return true;
+        if (plugin.permissions.ensurePermission(commandSender, Permissions.host("rejoins.toggle"))) return true;
 
         plugin.state.rejoinsDisabled = !plugin.state.rejoinsDisabled;
         plugin.chat.announce(

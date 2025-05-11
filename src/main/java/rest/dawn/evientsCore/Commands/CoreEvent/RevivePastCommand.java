@@ -1,13 +1,11 @@
 package rest.dawn.evientsCore.Commands.CoreEvent;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
-import rest.dawn.evientsCore.Managers.ChatManager;
 import rest.dawn.evientsCore.EvientsCore;
 import rest.dawn.evientsCore.Util.Permissions;
 import rest.dawn.evientsCore.Util.Util;
@@ -17,7 +15,7 @@ import java.util.Map;
 import java.util.UUID;
 
 public class RevivePastCommand implements CommandExecutor {
-    public EvientsCore plugin;
+    private final public EvientsCore plugin;
 
     public RevivePastCommand(EvientsCore plugin) {
         this.plugin = plugin;
@@ -25,7 +23,7 @@ public class RevivePastCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
-        if (!plugin.permissions.ensurePermission(commandSender, Permissions.host("revive.revivepast"))) return true;
+        if (plugin.permissions.ensurePermission(commandSender, Permissions.host("revive.revivepast"))) return true;
 
         if (strings.length != 1) {
             plugin.chat.replyError(commandSender, "Please provide a a time frame! Like: /revivepast 5s");

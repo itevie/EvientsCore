@@ -1,7 +1,6 @@
 package rest.dawn.evientsCore.Commands.CoreEvent;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;

@@ -8,7 +8,7 @@ import rest.dawn.evientsCore.EvientsCore;
 import rest.dawn.evientsCore.Util.Permissions;
 
 public class UndoCommand implements CommandExecutor {
-    EvientsCore plugin;
+    final EvientsCore plugin;
 
     public UndoCommand(EvientsCore plugin) {
         this.plugin = plugin;
@@ -16,7 +16,7 @@ public class UndoCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
-        if (!plugin.permissions.ensurePermission(commandSender, Permissions.host("undo"))) return true;
+        if (plugin.permissions.ensurePermission(commandSender, Permissions.host("undo"))) return true;
 
         if (plugin.state.undo == null || plugin.state.undo.expired()) {
             plugin.chat.replyError(commandSender, "Nothing to undo!");

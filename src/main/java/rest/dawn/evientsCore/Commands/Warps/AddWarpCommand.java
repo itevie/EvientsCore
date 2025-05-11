@@ -9,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
 import rest.dawn.evientsCore.EvientsCore;
 
 public class AddWarpCommand implements CommandExecutor {
-    EvientsCore plugin;
+    private final EvientsCore plugin;
 
     public AddWarpCommand(EvientsCore plugin) {
         this.plugin = plugin;
@@ -17,7 +17,7 @@ public class AddWarpCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
-        if (!plugin.permissions.ensurePermission(commandSender, "evients.host.warps.add")) return true;
+        if (plugin.permissions.ensurePermission(commandSender, "evients.host.warps.add")) return true;
 
         if (strings.length != 1 && strings.length != 4) {
             plugin.chat.replyError(

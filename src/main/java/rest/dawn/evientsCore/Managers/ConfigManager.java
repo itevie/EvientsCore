@@ -1,6 +1,5 @@
 package rest.dawn.evientsCore.Managers;
 
-import org.bukkit.ChatColor;
 import rest.dawn.evientsCore.EvientsCore;
 import rest.dawn.evientsCore.Util.Util;
 

@@ -1,6 +1,5 @@
 package rest.dawn.evientsCore.Commands.CoreEvent;
 
-import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -12,7 +11,7 @@ import rest.dawn.evientsCore.Util.HideMode;
 
 public class HideCommand implements CommandExecutor {
     private static final String usage = "Usage: /hide \\<all|staff|off\\>";
-    EvientsCore plugin;
+    private final EvientsCore plugin;
 
     public HideCommand(EvientsCore plugin) {
         this.plugin = plugin;

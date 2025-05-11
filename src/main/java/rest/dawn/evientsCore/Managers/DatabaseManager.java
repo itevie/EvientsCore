@@ -2,14 +2,12 @@ package rest.dawn.evientsCore.Managers;
 
 import rest.dawn.evientsCore.EvientsCore;
 
-import javax.swing.plaf.nimbus.State;
 import java.io.File;
 import java.sql.*;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 public class DatabaseManager {
@@ -23,7 +21,6 @@ public class DatabaseManager {
                     "jdbc:sqlite:" + new File(
                             plugin.getDataFolder(),
                             "data.db")
-                            .toString()
             );
             initialise();
         } catch (SQLException e) {

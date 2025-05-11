@@ -1,8 +1,15 @@
+# Note:
+# When seeing ¬a, ¬p, ¬e, it means it'll use the defined colors
+# ¬a will be replaced with "accentColor"
+# ¬p will be replaced with "chatColor"
+# ¬e will be replaced with "errorColor"
+
 # Information
 discordLink: https://discord.gg/brEcvy7A7y
 
 # Response Options
 announcementPrefix: "⚠"
+directMessageFormat: "<gray>[<¬a>$sender</¬a> -> <¬a>$recipient</¬a>]</gray> <white>$message</white>"
 
 # Response Colors (using Adventure api)
 chatColor: green
@@ -14,6 +21,16 @@ ignoreHostsInCommands: true
 spawnWarp: spectate # Used for places like rejoins
 
 # Scoreboard
+scoreboardFormat:
+  - " "
+  - "<¬a>$player_name</¬a>"
+  - "<gray>| </gray> Status: <¬a>$alive_string</¬a>"
+  - " "
+  - "<¬a>Event</¬a>"
+  - "<gray>| </gray> Alive: <¬a>$alive_count</¬a>"
+  - "<gray>| </gray> Dead: <¬a>$dead_count</¬a>"
+  - "<gray>| </gray> Timer: <¬a>$timer</¬a>"
+  - "<gray>EvientsCore</gray>"
 
 # Random announcements
 randomAnnouncementsEnabled: true

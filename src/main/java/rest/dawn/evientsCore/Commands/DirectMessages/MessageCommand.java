@@ -11,7 +11,7 @@ import rest.dawn.evientsCore.EvientsCore;
 import java.util.Arrays;
 
 public class MessageCommand implements CommandExecutor {
-    EvientsCore plugin;
+    private final EvientsCore plugin;
 
     public MessageCommand(EvientsCore plugin) {
         this.plugin = plugin;

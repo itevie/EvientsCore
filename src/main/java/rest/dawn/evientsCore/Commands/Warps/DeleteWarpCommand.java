@@ -6,10 +6,8 @@ import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 import rest.dawn.evientsCore.EvientsCore;
 
-import java.util.Arrays;
-
 public class DeleteWarpCommand implements CommandExecutor {
-    EvientsCore plugin;
+    private final EvientsCore plugin;
 
     public DeleteWarpCommand(EvientsCore plugin) {
         this.plugin = plugin;
@@ -17,7 +15,7 @@ public class DeleteWarpCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
-        if (!plugin.permissions.ensurePermission(commandSender, "evients.host.warps.delete")) return true;
+        if (plugin.permissions.ensurePermission(commandSender, "evients.host.warps.delete")) return true;
 
         if (strings.length != 1) {
             plugin.chat.replyError(

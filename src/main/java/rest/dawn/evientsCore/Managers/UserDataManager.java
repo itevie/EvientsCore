@@ -3,7 +3,6 @@ package rest.dawn.evientsCore.Managers;
 import rest.dawn.evientsCore.EvientsCore;
 import rest.dawn.evientsCore.Models.UserData;
 
-import javax.annotation.Nullable;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;

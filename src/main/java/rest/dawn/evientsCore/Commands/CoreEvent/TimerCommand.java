@@ -20,7 +20,7 @@ public class TimerCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
-        if (!plugin.permissions.ensurePermission(commandSender, Permissions.host("timer"))) return true;
+        if (plugin.permissions.ensurePermission(commandSender, Permissions.host("timer"))) return true;
 
         if (strings.length != 1) {
             plugin.chat.replyError(

@@ -2,22 +2,17 @@ package rest.dawn.evientsCore.Util;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import rest.dawn.evientsCore.EvientsCore;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.model.user.User;
-import net.luckperms.api.query.QueryOptions;
 
-import javax.annotation.Nullable;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Consumer;
-import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 public class Util {
     public static <T> T getRandomElement(Set<T> set) {
@@ -46,7 +41,7 @@ public class Util {
         for (UUID uuid : uuids) {
             Player player = Bukkit.getPlayer(uuid);
             if (player == null) {
-                Bukkit.getLogger().warning("Failed to get user by UUID: " + uuid.toString());
+                Bukkit.getLogger().warning("Failed to get user by UUID: " + uuid);
                 continue;
             }
 
@@ -89,12 +84,9 @@ public class Util {
 
     public static boolean userIsHost(UUID player) {
         LuckPerms luckPerms = LuckPermsProvider.get();
-
-        // Get the LuckPerms user
         User user = luckPerms.getUserManager().getUser(player);
 
-        boolean has =  user.getCachedData().getPermissionData()
-                    .checkPermission("evients.host").asBoolean();
-        return has;
+        return user.getCachedData().getPermissionData()
+                .checkPermission("evients.host").asBoolean();
     }
 }

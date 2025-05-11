@@ -12,7 +12,7 @@ import java.util.List;
 
 /// This isn't actually used, it's just a template command.
 public class WinsCommand implements CommandExecutor {
-    EvientsCore plugin;
+    final EvientsCore plugin;
 
     public WinsCommand(EvientsCore plugin) {
         this.plugin = plugin;

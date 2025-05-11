@@ -5,14 +5,11 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import rest.dawn.evientsCore.EvientsCore;
 import rest.dawn.evientsCore.Util.HexToMinecraft;
-
-import java.util.Arrays;
 
 public class ChatManager {
     private final EvientsCore plugin;

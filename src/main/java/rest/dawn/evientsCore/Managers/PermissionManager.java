@@ -19,9 +19,9 @@ public class PermissionManager {
                     sender,
                     "You do not have permission to do that!"
             );
-            return false;
+            return true;
         }
-        return true;
+        return false;
     }
 
     /// Checks if the sender is a player, if not it auto responds and returns null

@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
 import rest.dawn.evientsCore.EvientsCore;
 
 public class DiscordCommand implements CommandExecutor {
-    EvientsCore plugin;
+    private final EvientsCore plugin;
 
     public DiscordCommand(EvientsCore plugin) {
         this.plugin = plugin;
