@@ -68,6 +68,9 @@ public class RegionFlagCommands implements CommandExecutor {
             case "falldamage":
                 flag = Flags.FALL_DAMAGE;
                 break;
+            case "mobspawning":
+                flag = Flags.MOB_SPAWNING;
+                break;
             default:
                 plugin.chat.replyError(commandSender, "An unknown error occurred.");
                 return true;
