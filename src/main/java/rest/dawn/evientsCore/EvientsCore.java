@@ -16,6 +16,7 @@ import rest.dawn.evientsCore.Commands.Help.ReloadConfigCommand;
 import rest.dawn.evientsCore.Commands.Kits.CreateKitCommand;
 import rest.dawn.evientsCore.Commands.Kits.KitsCommand;
 import rest.dawn.evientsCore.Commands.Wins.AddWinCommand;
+import rest.dawn.evientsCore.Commands.Wins.WinLeaderboardCommand;
 import rest.dawn.evientsCore.Commands.Wins.WinsCommand;
 import rest.dawn.evientsCore.Commands.Warps.AddWarpCommand;
 import rest.dawn.evientsCore.Commands.Warps.DeleteWarpCommand;
@@ -55,6 +56,12 @@ public final class EvientsCore extends JavaPlugin implements Listener {
         scoreboard.start();
         listManager.initCacheReloader();
         randomAnnouncements.start();
+        database.initialise();
+
+//        if (config.discordBotToken != null) {
+//            DiscordBotManager discord = new DiscordBotManager(this);
+//            discord.initialise(config.discordBotToken);
+//        }
 
         try {
             Map<String, Class<? extends CommandExecutor>> commandMap = new HashMap<>() {{
@@ -79,6 +86,9 @@ public final class EvientsCore extends JavaPlugin implements Listener {
                 put("createkit", CreateKitCommand.class);
                 put("kits", KitsCommand.class);
                 put("reloadconfig", ReloadConfigCommand.class);
+                put("winleaderboard", WinLeaderboardCommand.class);
+                put("summon", SummonCommand.class);
+                put("butcher", ButcherCommand.class);
             }};
 
             for (var entry : commandMap.entrySet()) {
@@ -92,7 +102,7 @@ public final class EvientsCore extends JavaPlugin implements Listener {
 
             // ----- Multies -----
             Util.loadManyCommandsInto(this, new RegionFlagCommands(this), new String[]
-                    {"pvp", "break", "build", "falldamage"}
+                    {"pvp", "break", "build", "falldamage", "mobspawning"}
             );
             Util.loadManyCommandsInto(this, new MultiPlayerCommands(this), new String[]
                     {

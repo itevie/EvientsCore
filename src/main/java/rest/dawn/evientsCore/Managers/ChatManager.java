@@ -120,4 +120,13 @@ public class ChatManager {
     public void replyError(CommandSender sender, String format, Object... args) {
         send((Audience)sender, deserializeWrap(format, "¬e", args));
     }
+
+    public static String clickable(String command, String tooltip, String inner) {
+        return String.format(
+                "<click:run_command:%s><hover:show_text:%s>%s</hover></click>",
+                command,
+                tooltip,
+                inner
+        );
+    }
 }

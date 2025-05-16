@@ -15,7 +15,7 @@ import java.util.Map;
 import java.util.UUID;
 
 public class RevivePastCommand implements CommandExecutor {
-    private final public EvientsCore plugin;
+    private final EvientsCore plugin;
 
     public RevivePastCommand(EvientsCore plugin) {
         this.plugin = plugin;

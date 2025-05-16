@@ -32,6 +32,11 @@ public class AddWinCommand implements CommandExecutor {
         }
 
         Player player = Bukkit.getPlayer(strings[0]);
+        if (player == null) {
+            plugin.chat.replyError(commandSender, "Failed to find that player.");
+            return true;
+        }
+
         UUID uuid = player.getUniqueId();
         plugin.wins.addWin(new Win(uuid));
         List<Win> wins = plugin.wins.getWinsFor(uuid);

@@ -5,6 +5,8 @@ api-version: '1.21'
 prefix: Evients
 depend: [WorldGuard]
 softdepend: [LuckPerms]
+loadbefore:
+  - WorldEdit
 commands:
   setwarp:
     description: Sets a new warp
@@ -45,11 +47,19 @@ commands:
   wins:
     description: See how many wins you have
     usage: /wins
-    permission: evients.player.wins.list
+    permission: evients.player.wins.single
   addwin:
     description: Add a win for a user
     usage: /addwin <user>
     permission: evients.host.wins.add
+  winleaderboard:
+    description: Get the wins leaderboard
+    permission: evients.player.wins.list
+    aliases: ["winlb"]
+
+  summon:
+    description: Summon entities
+    permission: evients.host.summon
 
   timer:
     description: Starts a timer
@@ -175,6 +185,13 @@ commands:
   falldamage:
     description: Toggle falldamage within the current region
     permission: evients.host.region.falldamage
+  mobspawning:
+    description: Toggle mobspawning within the current region
+    permission: evients.host.region.mobspawning
+
+  butcher:
+    description: Kill all entitites
+    permission: evients.host.butcher
 
   tpall:
     description: Teleports all players to you

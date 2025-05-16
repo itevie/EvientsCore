@@ -22,6 +22,9 @@ public class ConfigManager {
 
     public String announcementPrefix;
 
+    public @Nullable String discordBotToken;
+    public @Nullable String discordBotServer;
+
     public ConfigManager(EvientsCore plugin) {
         this.plugin = plugin;
         load();
@@ -41,6 +44,9 @@ public class ConfigManager {
         this.randomAnnouncementsEnabled = config.getBoolean("randomAnnouncementsEnabled", false);
         this.randomAnnouncementFrequency = Util.parseTimeInput(config.getString("randomAnnouncementFrequency", "5m"));
         this.randomAnnouncements = config.getStringList("randomAnnouncements");
+
+        this.discordBotToken = config.getString("discordBotToken", null);
+        this.discordBotServer = config.getString("discordBotServer", null);
 
         this.announcementPrefix = config.getString("announcementPrefix", "⚠");
 

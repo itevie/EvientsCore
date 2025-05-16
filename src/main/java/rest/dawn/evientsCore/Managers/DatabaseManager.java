@@ -16,19 +16,19 @@ public class DatabaseManager {
 
     public DatabaseManager(EvientsCore plugin) {
         this.plugin = plugin;
+    }
+
+    public void initialise() {
         try {
             this.connection = DriverManager.getConnection(
                     "jdbc:sqlite:" + new File(
                             plugin.getDataFolder(),
                             "data.db")
             );
-            initialise();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            plugin.getLogger().warning("Failed to initialise database: " + e);
+            return;
         }
-    }
-
-    private void initialise() {
         ensureTable("warps", new HashMap<>(){{
             put("name", "TEXT PRIMARY KEY");
             put("world", "TEXT NOT NULL");
